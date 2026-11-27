@@ -38,4 +38,5 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
    - **Missed**: files in the guess that did not change. Still to do, or a wrong guess?
    - **Accuracy**: hits / (hits + surprises + missed), as a percent. Do not count the report file, lock files, or vendored files.
    - **FIT check**: did the work follow the checklist from the BEFORE FIT section? If the BEFORE report is an older version of the template, read it as it is.
-6. **Write** as the "Where the report goes" table says. In a file, add the "After" section under the BEFORE text. Do not change the BEFORE text.
+6. **Merge score.** Count it with the rule in scoring.md ("Merge score"). Use the header counts of new findings, also the ones not in the table. Give the score, the call, the bug risk, and the math line.
+7. **Write** as the "Where the report goes" table says. In a file, add the "After" section under the BEFORE text. Do not change the BEFORE text.

@@ -85,7 +85,7 @@ Then restart Claude Code.
 /blast-radius 57            # PR 57
 ```
 
-In the "done" mode, it finds the first report, measures the real diff, and shows the guess next to the real result: which files you missed, what surprised you, and how close the guess was. It also looks ahead: risks that are not bugs yet, when they bite, and what to do.
+In the "done" mode, it finds the first report, measures the real diff, and shows the guess next to the real result: which files you missed, what surprised you, and how close the guess was. It also looks ahead: risks that are not bugs yet, when they bite, and what to do. And it gives a **merge score** (0-100), counted from the findings with a fixed rule, for example `Merge score 45/100 (not ready) · bug risk high (F1)`. It is a score, not a chance.
 
 You can also just ask: *"what's the blast radius of issue 42?"* or *"my branch is ready for PR, check the impact"*.
 
