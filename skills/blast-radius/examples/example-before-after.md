@@ -145,9 +145,9 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 <!-- blast-radius:after id=idea-add-tags-notes version=1 date=2026-11-27 -->
 ## Blast radius AFTER: Add tags to notes
 
-**Merge score 12/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 57% · 4 file(s) · 1 repo(s) · security L · findings 1 high, 5 medium, 1 low · now 1 high, 1 medium, 3 low · PR: branch feat/tags (no PR)
+**Merge score 22/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 57% · 4 file(s) · 1 repo(s) · security L · findings 1 high, 5 medium, 1 low · now 1 high, 1 medium, 3 low · PR: branch feat/tags (no PR)
 
-> **Merge score**: 12/100, not ready. Bug risk: high (F1, run). Fix first: F1, F3, F4.
+> **Merge score**: 22/100, not ready. Bug risk: high (F1, run). Fix first: F1, F3, F4.
 > **WHAT check**: partly. The API stores tags, returns them, and filters with `GET /notes?tag=`. Bad tags do not get 400, `docs/api.md` is not updated, and notes-web has no tag input or filter yet.
 > **FIT check**: 3 of 7 rules followed. Worst break: `tags` is not checked, and one bad value can crash the API (F1).
 > **Biggest surprise**: the filter went to the server (`?tag=`, open question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F7).
@@ -257,9 +257,9 @@ Fixed by this diff: BEFORE F4 for GET (`GET /notes?tag=work` no longer returns 4
 
 <details><summary>Merge score: how it was counted</summary>
 
-`100 - 25 (F1) - 10 x 5 (F3-F7) - 3 (F9) - 10 (WHAT partly) = 12`
+`100 - 25 (F1) - 10 x 5 (F3-F7) - 3 (F9) = 22`
 
-Capped at 49: new high finding F1 (the cap does not change 12).
+WHAT partly: no -10, because F4 and F5 already name the missing parts.
 A score from the rule in scoring.md, not a chance. "Now:" findings (F2, F8, F10, 2 more) do not count.
 
 </details>

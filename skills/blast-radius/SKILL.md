@@ -220,7 +220,7 @@ WHAT: <one line>
 <ASCII impact map, max 5 lines>
 Files: <n> change, <n> new, <n> delete, <n> maybe · repos: <n> · security <S|M|L|XL>
 Findings: <n> high, <n> medium, <n> low · now: <n> high · top: <F1, short>
-[AFTER: score <n>/100 <call> · guess <size>, real <size> · accuracy <n>% · FIT <n> of <n> · ahead <n>]
+[AFTER: score <n> <call> · guess <size>→<size> · accuracy <n>% · FIT <n>/<n> · ahead <n>]
 Questions: <n, or "none">
 Report: <path or URL, or "not written (dry run)">
 ```

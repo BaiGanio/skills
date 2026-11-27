@@ -110,7 +110,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 > **FIT check**: <n> of <n> rules followed. <the worst break, or "all followed">
 > **Biggest surprise**: <one line>
 > **Top findings**: F1 <one line> · F2 <one line> · F3 <one line>
-> **Look ahead**: A1 <one line> · A2 <one line>, or "none seen: <reason>"
+> **Look ahead**: A1 <one line> · A2 <one line> (max 2), or "none seen: <reason>"
 
 ### Impact map (real)
 
@@ -155,7 +155,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 `<the math line, for example 100 - 25 (F1) - 10 x 2 (F3, F4) - 10 (WHAT partly) = 45>`
 
-<If a cap applied: "Capped at 49: new high finding F1.">
+<Only when the cap lowered the score: "Capped at 49: new high finding F1.">
 A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
 
 </details>
