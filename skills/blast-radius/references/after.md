@@ -17,7 +17,17 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
 3. **Measure the real impact.** Do steps 3-7 on the diff. Size what the diff **did**. Work the change still needs goes to **Missed** and to should-change findings, not into the sizes. Keep WHAT and WHY (from the ticket, else from the commit messages, tagged guess).
    - **Should have changed**: files the diff did not touch, but that describe what the diff changed (a contract doc, an API spec, a client in another repo). Also code the diff added that nothing uses (a migration no code runs). List them as findings.
    - Confidence for AFTER-only with no ticket: max **medium**.
-4. **Compare** (skip for AFTER-only):
+4. **Look ahead.** Findings say what is wrong in the diff now. Look ahead says what the diff can cause later. Check the touched area plus one level out:
+   - **ripple**: code outside the diff that now gets a different input, output, or call order (callers, jobs, other repos that read a changed contract). Say what it now sees.
+   - **flow**: the code path changed: a new step, branch, async path, or failure point, or a new order. Say what runs differently, and where it can fail.
+   - **design**: a pattern, coupling, or shortcut that the next change will copy or must work around (a second way to do X, data that two modules now own, a hard-coded limit).
+   - **growth**: what breaks when data, users, or calls grow (a full scan per request, an in-memory store, no paging, a list with no limit).
+   - **next**: the change that the ticket or the code points to next. Does this diff make it easy or hard?
+
+   Each item gets an ID (A1, A2, ...), a kind, a place (`file:line`), what can happen, **when** it bites (the trigger), and one action: `now: <fix>` or `watch: <signal>`. Max 5, most likely first. Tag each item (often **guess**).
+   - Only risks that are not bugs today. A bug today is a finding (F). Do not list it twice.
+   - Nothing real: write "none seen" and one reason. Do not fill the list to fill it.
+5. **Compare** (skip for AFTER-only):
    - **Guess vs real**: one row per sized part. Guess size, real size, and the step difference ("same", "+1", "-1").
    - **WHAT check**: does the diff do what WHAT said? yes, partly, or no, and why.
    - **Hits**: files in the guess that changed. A "maybe" that changed is a hit.
@@ -25,4 +35,4 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
    - **Missed**: files in the guess that did not change. Still to do, or a wrong guess?
    - **Accuracy**: hits / (hits + surprises + missed), as a percent. Do not count the report file, lock files, or vendored files.
    - **FIT check**: did the work follow the checklist from the BEFORE FIT section? If the BEFORE report is an older version of the template, read it as it is.
-5. **Write** as the "Where the report goes" table says. In a file, add the "After" section under the BEFORE text. Do not change the BEFORE text.
+6. **Write** as the "Where the report goes" table says. In a file, add the "After" section under the BEFORE text. Do not change the BEFORE text.

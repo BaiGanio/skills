@@ -1,9 +1,9 @@
 ---
 name: blast-radius
-description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, and security. Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
+description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, security, and a look ahead at what the change can cause later (other code, code flow, design). Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
 license: MIT
 metadata:
-  version: 0.4.2
+  version: 0.5.0
   repo: https://github.com/BaiGanio/skills
 ---
 
@@ -17,11 +17,12 @@ Understand a change before and after it is made:
 4. **FIT**: does it follow the project's architecture and standards?
 5. **HEALTH**: duplication, code smells, and bugs in the touched area.
 6. **SECURITY**: what changes for auth, input, secrets, and data?
+7. **AHEAD** (AFTER only): what can the change cause later, in other code, the code flow, and the design?
 
 Two modes:
 
 - **BEFORE**: the work has not started. Guess the impact. Find code to reuse, smells to know about, and the rules the work must follow.
-- **AFTER**: the work is done. Measure the real diff, compare it with the BEFORE guess, and check the diff for FIT, HEALTH, and SECURITY.
+- **AFTER**: the work is done. Measure the real diff, compare it with the BEFORE guess, check the diff for FIT, HEALTH, and SECURITY, and look ahead for risks that are not bugs yet.
 
 ## Rules
 
@@ -219,7 +220,7 @@ WHAT: <one line>
 <ASCII impact map, max 5 lines>
 Files: <n> change, <n> new, <n> delete, <n> maybe · repos: <n> · security <S|M|L|XL>
 Findings: <n> high, <n> medium, <n> low · now: <n> high · top: <F1, short>
-[AFTER: guess <size>, real <size> · accuracy <n>% · FIT <n> of <n>]
+[AFTER: guess <size>, real <size> · accuracy <n>% · FIT <n> of <n> · ahead <n>]
 Questions: <n, or "none">
 Report: <path or URL, or "not written (dry run)">
 ```
