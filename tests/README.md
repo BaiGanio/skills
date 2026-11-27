@@ -22,7 +22,7 @@ It also has known problems on purpose: a typo in the 404 text, a second copy of 
 | T4 | tags branch, no report | `/blast-radius done` | Asks for a BEFORE report once. Writes `docs/blast-radius/branch-feat-tags.md`. AFTER-only shape. Finds the `tags: null` crash. |
 | T5 | T1 report | T1 again with "...and edit tags later" | Same file. `version=2`. Old text in History. |
 | T6 | fixtures | `/blast-radius notes` (user does not answer) | Asks "What should change about notes?" with choices. Writes nothing. Prints the "stopped" summary. |
-| T7 | a GitHub sandbox repo with an issue | `/blast-radius #1`, then `done` with a PR | Posts only after OK. Re-run edits the same comment. AFTER posts on the PR and a link on the issue. |
+| T7 | a GitHub sandbox repo with an issue | `/blast-radius #1`, then `done` with a PR | Posts directly, with no draft in the chat and no question. Re-run edits the same comment. AFTER posts on the PR and a link on the issue. |
 | T8 | a real repo | `/blast-radius <plan file> --dry-run` | No file written. Useful findings. |
 
 After each run, check `git status --short` in both repos: only the report file may be new.

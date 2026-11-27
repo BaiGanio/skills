@@ -3,7 +3,7 @@ name: blast-radius
 description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, and security. Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
 license: MIT
 metadata:
-  version: 0.4.1
+  version: 0.4.2
   repo: https://github.com/BaiGanio/skills
 ---
 
@@ -27,7 +27,7 @@ Two modes:
 
 - Do not change code. The only thing this skill writes is its report (a file or a comment).
 - Never commit. Never push. The user commits the report file with their work.
-- Never post a comment without the user's OK. Show the draft first. Skip the question only with `--yes`.
+- Post the comment or write the file directly. Do not print the report in the chat, and do not ask first. To see the report before it goes out, the user runs `--dry-run`.
 - Do not open `.env*`, `*.pem`, `*.key`, `*.pfx`, `secrets.*`, or files in a `secrets/` folder. Other files you may read, even if they hold a secret. If you find one, give the file and line. Never print or type the value.
 - Read-only probes are allowed: a short command that writes no file, opens no port, and uses no network. It may import project modules and call them in-process (for example `node -e` that calls a function, or `server.emit('request', req, res)` with fake objects). Set any needed secret env var to a throwaway value. Probes prove a claim. Linters, scanners, and test suites run only with `--run-checks`.
 - Tag each claim: **seen** (you read it in the code or diff), **run** (a probe or check proved it), or **guess** (no proof). Bugs you find by reading are **seen**. Rules you infer from the code are tagged **pattern**.
@@ -38,13 +38,12 @@ Two modes:
 ## Arguments
 
 ```
-/blast-radius <input> [--before | --after] [--yes] [--dry-run] [--base <branch>] [--out file|comment] [--id <id>] [--run-checks]
+/blast-radius <input> [--before | --after] [--dry-run] [--base <branch>] [--out file|comment] [--id <id>] [--run-checks]
 ```
 
 | Flag | Meaning |
 |---|---|
 | `--before`, `--after` | Force the mode. Without them, pick the mode with step 1. |
-| `--yes` | Post or write without the question. |
 | `--dry-run` | Show the report in the chat only. Write no file. Post no comment. |
 | `--base <branch>` | The branch to compare with in AFTER mode. Default: the PR base, else `main`, else `master`. |
 | `--out file\|comment` | Force where the report goes. |
@@ -201,9 +200,8 @@ Read [references/report.md](references/report.md) for the template and the hidde
 
 1. If an older report exists (a comment with the marker, or the file), do not add a second one. Move the old text into the "History" block (see report.md), then put the new text on top. Edit the comment in place.
 2. With `--dry-run`: print the full report, then the chat summary, and stop.
-3. For a comment, without `--yes`: print the full report, then ask "Post this to <URL>?" and wait.
-4. Write or post.
-5. Print the chat summary once, as the last thing.
+3. Else write or post. Do not print the report in the chat.
+4. Print the chat summary once, as the last thing.
 
 ## AFTER mode
 

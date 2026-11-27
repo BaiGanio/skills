@@ -1,3 +1,7 @@
 .DS_Store
 node_modules/
 tests/runs/
+
+# Claude Code local files (keep .claude-plugin/ tracked)
+.claude/
+CLAUDE.local.md

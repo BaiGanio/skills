@@ -100,7 +100,6 @@ Full example: [example-before-after.md](skills/blast-radius/examples/example-bef
 | Flag | What it does |
 |---|---|
 | `--dry-run` | Show the report in the chat only. Write nothing, post nothing. |
-| `--yes` | Post the comment without the question first. |
 | `--before` / `--after` | Force the mode. |
 | `--base <branch>` | Compare with this branch (default: the PR base, else `main`, else `master`). |
 | `--out file` / `--out comment` | Force where the report goes. |
@@ -133,7 +132,7 @@ If your repo has an `AGENTS.md` or `CLAUDE.md` that lists other repos with local
 ### Safety
 
 - It never edits your code, never commits, and never pushes.
-- It shows a comment before it posts the comment, unless you pass `--yes`.
+- It posts the comment (or writes the file) directly, with no draft in the chat. To see the report first, use `--dry-run`.
 - It does not open `.env`, key files, or secret folders. If it finds a secret in code, it gives the file and line, never the value.
 - It runs your tests or linters only with `--run-checks`.
 
