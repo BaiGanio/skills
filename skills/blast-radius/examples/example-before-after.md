@@ -151,6 +151,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 > **FIT check**: 3 of 7 rules followed. Worst break: `tags` is not checked, and one bad value can crash the API (F1).
 > **Biggest surprise**: the filter went to the server (`?tag=`, open question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F7).
 > **Top findings**: F1 `tags: null` plus `GET /notes?tag=x` crashes the API · F3 `tags` has no type, count, or length check · F4 `docs/api.md` not updated
+> **Look ahead**: A1 each GET scans every note · A2 notes-web `listNotes` has no tag yet
 
 ### Impact map (real)
 
@@ -250,6 +251,15 @@ Not checked: "show note data with `textContent`" (pattern, notes-web): notes-web
 Still open from BEFORE, outside the touched area: F2 (API key in client code, `notes-web/src/config.js:2`, fallback `src/auth.js:2`), F5 (click on a note deletes it), F10 (no `r.ok` check in `notes-web/src/api.js`).
 
 Fixed by this diff: BEFORE F4 for GET (`GET /notes?tag=work` no longer returns 405).
+
+</details>
+
+<details><summary>Look ahead: risks for later (2)</summary>
+
+| ID | Kind | Where | What can happen | When | Do |
+|---|---|---|---|---|---|
+| A1 | growth | `src/db.js:5` | `GET /notes?tag=` filters every note in memory on each call. (seen) It gets slow, and it cannot move to the `note_tags` table as is (F7). (guess) | Many notes, or the store moves to SQLite | watch: GET time; filter in the query when the store moves |
+| A2 | next | `notes-web/src/api.js` | The filter is on the server, so the notes-web part needs `listNotes(tag)`, not a browser filter. The BEFORE plan for notes-web is now wrong. (seen) | The notes-web ticket starts | now: update the notes-web plan (F5) |
 
 </details>
 

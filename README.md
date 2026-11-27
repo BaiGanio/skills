@@ -18,6 +18,7 @@ You give it a ticket, an issue, an idea, or a PR. It tells you:
 - **FIT**: does the change follow your project's rules and architecture?
 - **HEALTH**: code that already does the same job (reuse it), code smells, and bugs in the area.
 - **SECURITY**: what changes for auth, input checks, secrets, and data.
+- **LOOK AHEAD** (after the work): what the change can cause later: in other code, in the code flow, in the design, and when data grows.
 
 It also draws 1 to 3 small diagrams, so you see where the change lands.
 
@@ -84,7 +85,7 @@ Then restart Claude Code.
 /blast-radius 57            # PR 57
 ```
 
-In the "done" mode, it finds the first report, measures the real diff, and shows the guess next to the real result: which files you missed, what surprised you, and how close the guess was.
+In the "done" mode, it finds the first report, measures the real diff, and shows the guess next to the real result: which files you missed, what surprised you, and how close the guess was. It also looks ahead: risks that are not bugs yet, when they bite, and what to do.
 
 You can also just ask: *"what's the blast radius of issue 42?"* or *"my branch is ready for PR, check the impact"*.
 

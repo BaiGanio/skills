@@ -90,7 +90,7 @@ Not changed (seen): <files a reader may expect to change but do not, or leave th
 
 </details>
 
-<sub>Made by blast-radius v0.4.2</sub>
+<sub>Made by blast-radius v0.5.0</sub>
 ```
 
 If there is no older version, leave out the History block.
@@ -109,6 +109,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 > **FIT check**: <n> of <n> rules followed. <the worst break, or "all followed">
 > **Biggest surprise**: <one line>
 > **Top findings**: F1 <one line> · F2 <one line> · F3 <one line>
+> **Look ahead**: A1 <one line> · A2 <one line>, or "none seen: <reason>"
 
 ### Impact map (real)
 
@@ -149,13 +150,22 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 </details>
 
-<sub>Made by blast-radius v0.4.2</sub>
+<details><summary>Look ahead: risks for later (<n>)</summary>
+
+| ID | Kind | Where | What can happen | When | Do |
+|---|---|---|---|---|---|
+| A1 | growth | `file:line` | <what> (guess) | <the trigger> | watch: <signal> |
+| A2 | next | `file:line` | <what> (seen) | <the trigger> | now: <fix> |
+
+</details>
+
+<sub>Made by blast-radius v0.5.0</sub>
 ```
 
 ### AFTER-only (no BEFORE report)
 
 - In the header: leave out "guess was" and accuracy.
-- In the top box: put **WHAT** and **WHY** (from the ticket, or tagged guess) instead of "WHAT check" and "Biggest surprise". Keep "FIT check" and "Top findings".
+- In the top box: put **WHAT** and **WHY** (from the ticket, or tagged guess) instead of "WHAT check" and "Biggest surprise". Keep "FIT check", "Top findings", and "Look ahead".
 - Add an "Open questions" section after the impact map, like in BEFORE.
 - Do not use the dashed "surprise" style, except for "stale" files.
 - Replace "Guess vs real" with "Impact: size per part" from the BEFORE template, using a "Real" column.
@@ -165,7 +175,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 ```markdown
 <!-- blast-radius:after-link id=<ticket-id> -->
-Blast radius AFTER for <PR link>: size <real> (guess <guess>), accuracy <n>%, findings <n> high.
+Blast radius AFTER for <PR link>: size <real> (guess <guess>), accuracy <n>%, findings <n> high, look ahead <n>.
 ```
 
 ## History
