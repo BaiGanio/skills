@@ -45,6 +45,26 @@ npx skills add BaiGanio/skills --skill blast-radius -g     # for all your projec
 
 Optional: `gh` (GitHub issues and PRs) and `az` (Azure DevOps). Without them, the skill writes a file instead of a comment.
 
+### Update
+
+Get the latest version of the skill.
+
+**Any agent** (installed with `npx skills`):
+
+```bash
+npx skills update
+```
+
+**Claude Code plugin:**
+
+```
+/plugin marketplace update baiganio-skills
+```
+
+Then restart Claude Code.
+
+**By hand:** copy `skills/blast-radius/` again, over the old folder.
+
 ### Use it
 
 **Before you start the work:**
