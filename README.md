@@ -21,7 +21,7 @@ You give it a ticket, an issue, an idea, or a PR. It tells you:
 
 It also draws 1 to 3 small diagrams, so you see where the change lands.
 
-It reads code. It never changes code, never commits, and asks before it posts a comment.
+It reads code. It never changes code and never commits. It posts its report directly (use `--dry-run` to see it first).
 
 ### Install
 
