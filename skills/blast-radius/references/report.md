@@ -90,7 +90,7 @@ Not changed (seen): <files a reader may expect to change but do not, or leave th
 
 </details>
 
-<sub>Made by blast-radius v0.5.1</sub>
+<sub>Made by blast-radius v0.6.0</sub>
 ```
 
 If there is no older version, leave out the History block.
@@ -103,13 +103,14 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 <!-- blast-radius:after id=<ticket-id> version=<n> date=<YYYY-MM-DD> -->
 ## Blast radius AFTER: <title>
 
-**Size <real>** (guess was <guess>) · confidence <high|medium|low> · accuracy <n>% · <n> file(s) · <n> repo(s) · security <size> · findings <n> high, <n> medium, <n> low · now <n> high, <n> medium, <n> low · PR: <link, or "branch <name> (no PR)">
+**Merge score <n>/100** (<ready|fix first|not ready>) · **Size <real>** (guess was <guess>) · confidence <high|medium|low> · accuracy <n>% · <n> file(s) · <n> repo(s) · security <size> · findings <n> high, <n> medium, <n> low · now <n> high, <n> medium, <n> low · PR: <link, or "branch <name> (no PR)">
 
+> **Merge score**: <n>/100, <call>. Bug risk: <high|medium|low> (<IDs, tag>). <Fix first: F1, F3>
 > **WHAT check**: <yes / partly / no>. <why, one line>
 > **FIT check**: <n> of <n> rules followed. <the worst break, or "all followed">
 > **Biggest surprise**: <one line>
 > **Top findings**: F1 <one line> · F2 <one line> · F3 <one line>
-> **Look ahead**: A1 <one line> · A2 <one line>, or "none seen: <reason>"
+> **Look ahead**: A1 <one line> · A2 <one line> (max 2), or "none seen: <reason>"
 
 ### Impact map (real)
 
@@ -150,6 +151,15 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 </details>
 
+<details><summary>Merge score: how it was counted</summary>
+
+`<the math line, for example 100 - 25 (F1) - 10 x 2 (F3, F4) - 10 (WHAT partly) = 45>`
+
+<Only when the cap lowered the score: "Capped at 49: new high finding F1.">
+A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
+
+</details>
+
 <details><summary>Look ahead: risks for later (<n>)</summary>
 
 | ID | Kind | Where | What can happen | When | Do |
@@ -159,12 +169,12 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 </details>
 
-<sub>Made by blast-radius v0.5.1</sub>
+<sub>Made by blast-radius v0.6.0</sub>
 ```
 
 ### AFTER-only (no BEFORE report)
 
-- In the header: leave out "guess was" and accuracy.
+- In the header: leave out "guess was" and accuracy. Keep the merge score (no WHAT part, see scoring.md).
 - In the top box: put **WHAT** and **WHY** (from the ticket, or tagged guess) instead of "WHAT check" and "Biggest surprise". Keep "FIT check", "Top findings", and "Look ahead".
 - Add an "Open questions" section after the impact map, like in BEFORE.
 - Do not use the dashed "surprise" style, except for "stale" files.
@@ -175,7 +185,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 ```markdown
 <!-- blast-radius:after-link id=<ticket-id> -->
-Blast radius AFTER for <PR link>: size <real> (guess <guess>), accuracy <n>%, findings <n> high, look ahead <n>.
+Blast radius AFTER for <PR link>: merge score <n>/100 (<call>), size <real> (guess <guess>), accuracy <n>%, findings <n> high, look ahead <n>.
 ```
 
 ## History

@@ -101,6 +101,27 @@ Rough meaning, for the reader:
 - **medium**: you saw most files. Some groups are guesses.
 - **low**: the ticket is vague, or the code is too big to check. Say what would make it higher.
 
+## Merge score (AFTER mode)
+
+One number for the PR, from a fixed rule. It is a **score, not a chance**. Never write it as "safe" or "likely". The same findings must always give the same score.
+
+1. Start at 100.
+2. Take off for each **new** finding (the diff added it; should-change counts): high -25, medium -10, low -3. "Now:" findings take off nothing: the PR did not add them.
+3. WHAT check: partly -10, no -30. Skip this when a should-change finding already names the missing part (no double count), or in AFTER-only with no WHAT check.
+4. With `--run-checks`: -20 if a test, lint, or audit fails. Not run: 0.
+5. The lowest score is 0.
+6. Any new high finding: the score is at most 49.
+
+| Score | Call |
+|---|---|
+| 80-100 | ready |
+| 50-79 | fix first: <the findings to fix> |
+| 0-49 | not ready: <the findings to fix> |
+
+**Bug risk**, next to the score: **high** when a new high finding of kind bug or security exists, **medium** when a new medium one exists, else **low**. Name the IDs and the best tag (`high (F1, run)`).
+
+Show the math in one line: `100 - 25 (F1) - 10 x 5 (F2-F6) - 3 (F7) - 10 (WHAT partly) = 12`.
+
 ## Accuracy (AFTER mode)
 
 - Size steps: S→M is 1 step, S→L is 2 steps.

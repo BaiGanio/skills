@@ -1,9 +1,9 @@
 ---
 name: blast-radius
-description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, security, and a look ahead at what the change can cause later (other code, code flow, design). Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
+description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, security, a look ahead at what the change can cause later (other code, code flow, design), and a merge score. Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
 license: MIT
 metadata:
-  version: 0.5.1
+  version: 0.6.0
   repo: https://github.com/BaiGanio/skills
 ---
 
@@ -22,7 +22,7 @@ Understand a change before and after it is made:
 Two modes:
 
 - **BEFORE**: the work has not started. Guess the impact. Find code to reuse, smells to know about, and the rules the work must follow.
-- **AFTER**: the work is done. Measure the real diff, compare it with the BEFORE guess, check the diff for FIT, HEALTH, and SECURITY, and look ahead for risks that are not bugs yet.
+- **AFTER**: the work is done. Measure the real diff, compare it with the BEFORE guess, check the diff for FIT, HEALTH, and SECURITY, look ahead for risks that are not bugs yet, and give a merge score (0-100) from a fixed rule.
 
 ## Rules
 
@@ -220,7 +220,7 @@ WHAT: <one line>
 <ASCII impact map, max 5 lines>
 Files: <n> change, <n> new, <n> delete, <n> maybe · repos: <n> · security <S|M|L|XL>
 Findings: <n> high, <n> medium, <n> low · now: <n> high · top: <F1, short>
-[AFTER: guess <size>, real <size> · accuracy <n>% · FIT <n> of <n> · ahead <n>]
+[AFTER: score <n> <call> · guess <size>→<size> · accuracy <n>% · FIT <n>/<n> · ahead <n>]
 Questions: <n, or "none">
 Report: <path or URL, or "not written (dry run)">
 ```
