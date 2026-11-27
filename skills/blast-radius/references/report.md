@@ -90,7 +90,7 @@ Not changed (seen): <files a reader may expect to change but do not, or leave th
 
 </details>
 
-<sub>Made by blast-radius v0.5.0</sub>
+<sub>Made by blast-radius v0.5.1</sub>
 ```
 
 If there is no older version, leave out the History block.
@@ -159,7 +159,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 </details>
 
-<sub>Made by blast-radius v0.5.0</sub>
+<sub>Made by blast-radius v0.5.1</sub>
 ```
 
 ### AFTER-only (no BEFORE report)
