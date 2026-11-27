@@ -1,0 +1,10 @@
+{
+  "name": "baiganio-skills",
+  "version": "0.4.0",
+  "description": "Agent skills from BaiGanio",
+  "author": {
+    "name": "BaiGanio"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/BaiGanio/skills"
+}

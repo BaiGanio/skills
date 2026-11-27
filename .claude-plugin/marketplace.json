@@ -1,0 +1,14 @@
+{
+  "name": "baiganio-skills",
+  "description": "Agent skills from BaiGanio",
+  "owner": {
+    "name": "BaiGanio"
+  },
+  "plugins": [
+    {
+      "name": "baiganio-skills",
+      "source": "./",
+      "description": "BaiGanio skills: blast-radius"
+    }
+  ]
+}
