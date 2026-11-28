@@ -171,7 +171,7 @@ Drift and cheating: <the **test** findings (F-IDs), or "none seen: <what was che
 
 `<the math line, for example 100 - 25 (F1) - 10 x 2 (F3, F4) - 10 (WHAT partly) = 45>`
 
-<Only when the cap lowered the score: "Capped at 49: new high finding F1.">
+<Only when rule 5 or 6 changed the number, the math line ends with that rule: "= -78, floor 0" or "= 72, capped at 49 (F1)". Write only the rule that changed it.>
 A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
 
 </details>

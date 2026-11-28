@@ -131,6 +131,8 @@ One number for the PR, from a fixed rule. It is a **score, not a chance**. Never
 
 Show the math in one line: `100 - 25 (F1) - 10 x 5 (F2-F6) - 3 (F7) - 10 (WHAT partly) = 12`.
 
+When rule 5 or rule 6 changed the number, add that rule at the end of the line: `= -78, floor 0` or `= 72, capped at 49 (F1)`. Write only the rule that changed the number. Below 0, only the floor changes the number: the cap does not change 0. From 0 to 49 with a new high, or from 0 to 100 with no new high, write no rule.
+
 ## Accuracy (AFTER mode)
 
 - Size steps: S→M is 1 step, S→L is 2 steps.
