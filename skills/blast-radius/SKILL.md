@@ -176,7 +176,7 @@ The header counts both, apart. BEFORE puts "now" first (`now 2 high, 4 low · ne
 Read [references/diagrams.md](references/diagrams.md). Draw:
 1. **Impact map**: always. For an S change with 1 or 2 boxes, write the one-line form instead.
 2. **Before → after**: when Design or Architecture is M or bigger.
-3. **Cross-repo flow**: when more than 1 repo is hit, or when the change depends on another repo (step 4.7).
+3. **Cross-repo flow**: when more than 1 repo is hit, or when the change depends on another repo (step 4.7). In AFTER, a repo is hit only when the diff changed it. A repo with only should-change work is not hit: show it in the impact map with the `todo` class.
 
 Use Mermaid in files and GitHub comments. Use ASCII in Azure DevOps comments and in the chat summary.
 

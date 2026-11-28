@@ -81,6 +81,8 @@ AFTER:   Page --> API client [M] --> BGAPI [L]
 
 A repo that does not change but must do work first gets a dashed arrow labelled "needs".
 
+In AFTER, a repo is hit only when the diff changed it. A repo with only should-change work (for example a client that still needs the new field) is not hit. Show it in the impact map with the `todo` class, and skip this diagram when it is the only other repo.
+
 One box per repo. Arrows are the contract between them, with the contract name on the arrow.
 
 ```mermaid
