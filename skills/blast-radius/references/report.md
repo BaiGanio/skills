@@ -110,7 +110,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 > **WHAT check**: <yes / partly / no>. <why, one line>
 > **FIT check**: <n> of <n> rules followed. <the worst break, or "all followed">
 > **Biggest surprise**: <one line>
-> **Top findings**: F1 <one line> · F2 <one line> · F3 <one line>
+> **Top findings**: F1 <one line> · F2 <one line> · F3 <one line> (new findings first, highest first; a "Now:" high only when fewer than 3 new ones)
 > **Look ahead**: A1 <one line> · A2 <one line> (max 2), or "none seen: <reason>"
 
 ### Impact map (real)

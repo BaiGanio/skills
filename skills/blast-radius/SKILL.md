@@ -225,6 +225,8 @@ Questions: <n, or "none">
 Report: <path or URL, or "not written (dry run)">
 ```
 
+In AFTER, leave out "<n> maybe" on the Files line: the diff has no maybe files.
+
 The ASCII impact map has max 5 lines, and connector lines (`|`, `+-->`) count toward the 5. The whole summary stays max 14 lines.
 
 The `Questions` line counts open questions. In AFTER with a BEFORE report, it counts the BEFORE questions that are still open ("Guess vs real" lists them). In AFTER-only, it counts the report's own open questions.
