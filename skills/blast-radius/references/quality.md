@@ -54,6 +54,7 @@ In AFTER, check only what the diff adds:
 - A new line, or a new use of the broken way (a new call to a copy, a new raw compare), that breaks a rule: **breaks**, and a new finding.
 - A line the diff did not touch, also in a changed function: not a FIT break. If it matters, it is a "Now:" finding.
 - A changed line that keeps an old break as it was (the same call, only its arguments changed): not a FIT break. It is a "Now:" finding. Say in the Where cell that the line changed.
+- The diff makes the same logic run two ways in one area (GET now uses `new URL()`, POST and DELETE still compare raw `req.url`): the "done two ways" smell is new, because the diff made it. Old lines that did not change still count as "Now:" for FIT.
 
 Also check the architecture fit, even with no written rules:
 - Does the change put code in the layer and folder where similar code lives?
