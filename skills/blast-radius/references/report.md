@@ -133,6 +133,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 - Surprises (<n>): `c` (<why>)
 - Missed (<n>): `d` (<still to do, or wrong guess?>)
 - Maybe, not changed (<n>): `e` (<why it is not needed yet>)
+- Questions still open (<n>): <BEFORE question numbers, each with a short why, or "none">. Answered: <numbers, with how>
 - Not committed (<n>): `f`
 - Checks: <tests / lint / audit: pass, fail, or "not run (no --run-checks)">
 

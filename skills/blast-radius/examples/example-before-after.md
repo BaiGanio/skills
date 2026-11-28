@@ -208,6 +208,7 @@ Overall: L, from Contracts, Risk, and Security. Only 3 of the 6 parts are L, so 
 - Surprises (0)
 - Missed (4): `docs/api.md` (still to do, F3), `notes-web/index.html` and `notes-web/src/app.js` (still to do, F5), `notes-web/src/api.js` (a "maybe" whose "if" came true: the filter is on the server, so it needs `listNotes(tag)`; still to do, F5)
 - Maybe, not changed (1): `AGENTS.md:7` (lists the calls notes-web makes; add `?tag=` when notes-web uses it)
+- Questions still open (4): 2 (no update route yet), 3 (no tag limits; the match is exact and case-sensitive), 4 (`002_tags.sql` added, but no code runs it, F7), 5 (WHY is still a guess). Answered: 1 (the filter is on the server)
 - Not committed (0)
 - Checks: not run (no --run-checks)
 - Accuracy 50% (fair): 4 hits / (4 + 0 + 4). The guess had the right API files. The misses are the docs and the whole notes-web side, which is not started.

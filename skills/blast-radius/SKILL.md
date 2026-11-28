@@ -225,6 +225,8 @@ Questions: <n, or "none">
 Report: <path or URL, or "not written (dry run)">
 ```
 
+The `Questions` line counts open questions. In AFTER with a BEFORE report, it counts the BEFORE questions that are still open ("Guess vs real" lists them). In AFTER-only, it counts the report's own open questions.
+
 When you stop before a report (vague input, nothing to measure, the user said no):
 
 ```

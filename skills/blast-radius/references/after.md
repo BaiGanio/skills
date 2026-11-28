@@ -38,6 +38,7 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
    - **Surprises**: files that changed but were not in the guess. Say why, if you can see it.
    - **Missed**: files in the guess that did not change. Still to do, or a wrong guess? A "maybe" that did not change is Missed only when its "if" came true and the file still needs the change.
    - **Maybe, not changed**: the other "maybe" files that did not change. List them on their own line. They are not Missed, and they do not count in accuracy.
+   - **Questions**: for each BEFORE open question, say if the diff answered it (and how) or it is still open. The chat summary counts the open ones.
    - **Accuracy**: hits / (hits + surprises + missed), as a percent. Do not count the report file, lock files, or vendored files.
    - **FIT check**: did the work follow the checklist from the BEFORE FIT section? If the BEFORE report is an older version of the template, read it as it is.
 6. **Merge score.** Count it with the rule in scoring.md ("Merge score"). Use the header counts of new findings, also the ones not in the table. Give the score, the call, the bug risk, and the math line.
