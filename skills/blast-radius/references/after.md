@@ -25,7 +25,8 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
    - **next**: the change that the ticket or the code points to next. Does this diff make it easy or hard? This item may sit in another repo, or in a file the diff does not touch.
    - ripple or flow? When the code that gets hit is outside the diff, it is ripple.
 
-   Each item gets an ID (A1, A2, ...), a kind, a place (`file:line`), what can happen, **when** it bites (the trigger), and one action: `now: <fix>` or `watch: <signal>`. Max 5, most likely first. Tag each item (often **guess**). When a probe proved the fact under the risk, tag that fact **run**.
+   Each item gets an ID (A1, A2, ...), a kind, a place (`file:line`), what can happen, **when** it bites (the trigger), and one action: `now: <fix>` or `watch: <signal>`. Max 5. Put "next" items first (they are near certain), then the others, most likely first. Tag each item (often **guess**). When a probe proved the fact under the risk, tag that fact **run**.
+   - **When** names a thing a person can see: a number ("over ~100k notes"), a PR or ticket ("the notes-web tag PR"), or an event ("the store moves to SQLite"). Not "many notes" or "later".
    - Only risks that are not bugs today. A bug today is a finding (F). Do not list it twice.
    - An item may build on a finding only when it names a cost that the finding does not name (finding: "unused migration"; item: "tags then live in two places"). Add "see F6". The same file or the same problem is not a new cost.
    - When the action is already a finding's fix, write `now: see F2`. Do not write the fix again.

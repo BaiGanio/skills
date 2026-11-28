@@ -166,8 +166,8 @@ A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
 
 | ID | Kind | Where | What can happen | When | Do |
 |---|---|---|---|---|---|
-| A1 | growth | `file:line` | <what> (guess) | <the trigger> | watch: <signal> |
-| A2 | next | `file:line` | <what> (seen) | <the trigger> | now: <fix> |
+| A1 | next | `file:line` | <what> (seen) | <a PR, ticket, or event> | now: <fix> |
+| A2 | growth | `file:line` | <what> (guess) | <a number, for example "over ~100k notes"> | watch: <signal> |
 
 </details>
 
