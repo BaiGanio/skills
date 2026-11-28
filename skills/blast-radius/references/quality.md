@@ -99,14 +99,14 @@ Walk this list for the touched area. Skip the items that do not apply. Each hit 
 
 ### Security size
 
-Size what the change adds or removes. "Now:" holes in old code do not raise the size. They are findings. When an old hole makes a new risk worse (for example a new crash, and the key that guards it ships to every browser), size the new risk on its own, and name the old hole in the reason.
+Size what the change adds or removes. "Now:" holes in old code do not raise the size. They are findings. When an old hole makes a new risk worse (for example a new crash, and the key that guards it ships to every browser), size the new risk on its own, and name the old hole in the reason. When the old hole is the only thing that makes the new risk open to any visitor, the size is at most **L**. Say "Not XL: needs <old hole>".
 
 | Size | Meaning |
 |---|---|
 | S | No security surface changes. |
 | M | Touches input handling or adds data fields, and the checks are in place or easy to add. Or a new secret that lives only in env vars or a secret store. Or a path in "Security-sensitive paths" changes. |
 | L | Changes authentication, authorization, CORS, or what user data goes out. Or a secret in code or config. Or a new third-party script. Or a new input path with no checks. |
-| XL | A hole you can use now: an auth bypass, a secret in a public repo, an injection, or a crash any visitor can trigger. |
+| XL | A hole you can use now: an auth bypass, a secret in a public repo, an injection, or a crash any visitor can trigger with the new code alone (no old hole needed). |
 
 ## Findings
 
