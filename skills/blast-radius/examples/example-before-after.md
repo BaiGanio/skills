@@ -248,7 +248,7 @@ Not checked: "show note data with `textContent`" (pattern, notes-web): notes-web
 
 2 more, low (Now): typo "Not foud" (`src/server.js:9`); importing `src/server.js` throws when `process.argv[1]` is undefined (`src/server.js:13`).
 
-Still open from BEFORE, outside the touched area: F2 (API key in client code, `notes-web/src/config.js:2`, fallback `src/auth.js:2`), F5 (click on a note deletes it), F10 (no `r.ok` check in `notes-web/src/api.js`).
+Still open from BEFORE, outside the touched area: BEFORE F2 (API key in client code, `notes-web/src/config.js:2`, fallback `src/auth.js:2`), BEFORE F5 (click on a note deletes it), BEFORE F10 (no `r.ok` check in `notes-web/src/api.js`).
 
 Fixed by this diff: BEFORE F4 for GET (`GET /notes?tag=work` no longer returns 405).
 

@@ -152,7 +152,7 @@ Overall: <real size: which rule gave it (scoring.md "Overall size")>.
 
 <details><summary>Findings: health and security (<n>)</summary>
 
-<same table as BEFORE. Kinds include should-change. Add "Fixed by this diff: <old smells now gone>". Add "Still open from BEFORE, outside the touched area: <BEFORE IDs, short>" when there are any. Add the "Probes:" line when a probe patched something.>
+<same table as BEFORE. Kinds include should-change. Add "Fixed by this diff: <old smells now gone>". Add "Still open from BEFORE, outside the touched area: <BEFORE F2 (short), ...>" when there are any. Add the "Probes:" line when a probe patched something.>
 
 </details>
 
