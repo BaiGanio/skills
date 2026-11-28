@@ -111,6 +111,8 @@ Each hit is a finding of kind **test**:
 - **medium**: drift, a weaker assert, or a test with no real assert.
 - **low**: a test name that does not match its asserts, when the asserts still prove something.
 
+A cheat that hides a missing check is two findings, also when one fix closes both. The cheat is a **test** finding: the tests lie. The missing check has its own kind (bug, security, or should-change): the code is not safe. Example: `if (body.title === 'bad tags') return 400` is a high **test** finding, and the missing `tags` check is a **security** finding. Name the shared fix in both rows.
+
 A missing test is not a **test** finding. It is a FIT or standard finding ("every route has a test"). Do not list it twice: in the Done-when table, name that finding.
 
 ## SECURITY: checklist
@@ -160,6 +162,7 @@ More than 10 findings:
 - **Sev**: **high** = a bug, a security hole, possible data loss, or a must rule broken. **medium** = will cost time soon, or a should rule broken. **low** = style, or a pattern not followed.
 - **should-change** severity: **medium** by default. **high** only when a must rule names that exact file or contract. Example: `AGENTS.md` says "The API shape is in `docs/api.md`. Both repos must match it." The diff changes the API, not `docs/api.md`: high. Name the rule in What (`AGENTS.md:12`). Only the finding for the named file gets high. Other files the rule touches only through it (a client in another repo) stay medium. **low** when only a comment, or a list in a README, is out of date.
 - One root cause is one finding. Give it the highest severity of its effects, and name the other effects in What (for example the must rule it breaks). Example: `tags` is not checked, so `tags: null` crashes the API and the must rule "all input is checked" breaks: one high finding, not a high and a medium. This joins effects of the **new** code only. An old gap stays its own "Now:" finding, even when the same fix closes both (old `title` and `text` with no checks). Name the shared fix in both rows.
+- The one-root-cause rule is for one gap with many effects. A cheat and the gap it hides are two findings (TEST TRUST).
 - A finding about code that exists today starts with "Now:". Suggest fixing a high one in a separate ticket first.
 - A live secret anywhere a stranger can read it (a public repo, its git history, a client bundle) is **high**, even as "Now:". To search git history, redact the value: `git log -p -S '<name>' | sed -E 's/(key|token|secret|password)([^:=]*[:=]).*/\1\2 <redacted>/I'`.
 
