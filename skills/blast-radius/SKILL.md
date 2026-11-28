@@ -211,7 +211,7 @@ In AFTER mode, read [references/after.md](references/after.md). It says how to g
 
 ## The chat summary
 
-Print it once, as the last thing. Max 14 lines, max 80 characters each. Use a repo-relative path. The impact map wins the diagram space. Leave out the lines in [brackets] when they do not apply.
+Print it once, as the last thing. Max 14 lines, max 80 characters each. Use a repo-relative path. The impact map wins the diagram space. Leave out the lines in [brackets] when they do not apply. When a bracket line applies, print it without the brackets, and print its label: `Repo:`, `Warn:`, `AFTER:`, and `Tests:` are part of the line.
 
 ```
 blast-radius <BEFORE|AFTER> · id <ticket-id> · size <S|M|L|XL> · confidence <high|medium|low>
