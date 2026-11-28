@@ -86,7 +86,15 @@ Scope: the change list plus one level of callers. Not the whole repo.
 
 Do the tests prove WHAT, or do they only pass? Check the tests and the code that the diff added or changed. Read the test bodies, not only their names.
 
-**Done when vs tests.** Take each "Done when" check from WHAT. Find the test that proves it. Give each check one answer:
+**Done when vs tests.** Take each "Done when" check from WHAT. Find the test that proves it.
+
+Split "Done when" into checks like this:
+- One check for each result that a person can test on its own. Split at "and" and at commas between results.
+- Steps that lead to one result are one check. Example: "in the web app: add 2 notes, tag one "work", pick "work", and only that note shows" is 1 check, not 4.
+- Keep the order of the WHAT sentence.
+- Example: the WHAT in the example report gives 4 checks: POST returns the tags, GET returns them, bad tags get 400, and the web app filter.
+
+Give each check one answer:
 - **yes**: a test runs that check and asserts the result (the value, not only a count or "no error").
 - **partly**: a test is near it but checks less (one layer only, a count only, the happy path only).
 - **no**: no test, or the only test passes for the wrong reason.
