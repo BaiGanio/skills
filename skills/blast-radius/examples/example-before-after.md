@@ -145,13 +145,13 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 <!-- blast-radius:after id=idea-add-tags-notes version=1 date=2026-11-27 -->
 ## Blast radius AFTER: Add tags to notes
 
-**Merge score 17/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 50% · 4 file(s) · 1 repo(s) · security L · findings 2 high, 3 medium, 1 low · now 1 high, 1 medium, 3 low · PR: branch feat/tags (no PR)
+**Merge score 17/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 50% · 4 file(s) · 1 repo(s) · security L · findings 2 high, 3 medium, 1 low · now 2 high, 1 medium, 3 low · PR: branch feat/tags (no PR)
 
 > **Merge score**: 17/100, not ready. Bug risk: high (F1, run). Fix first: F1, F3.
 > **WHAT check**: partly. The API stores tags, returns them, and filters with `GET /notes?tag=`. Bad tags do not get 400, `docs/api.md` is not updated, and notes-web has no tag input or filter yet.
 > **FIT check**: 4 of 7 rules followed. Worst break: `tags` is not checked, and one bad value can crash the API (F1).
-> **Biggest surprise**: the filter went to the server (`?tag=`, open question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F6).
-> **Top findings**: F1 `tags: null` plus `GET /notes?tag=x` crashes the API · F3 `docs/api.md` not updated · F4 notes-web has no tag part yet
+> **Biggest surprise**: the filter went to the server (`?tag=`, open question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F7).
+> **Top findings**: F1 `tags: null` plus `GET /notes?tag=x` crashes the API · F3 `docs/api.md` not updated · F5 notes-web has no tag part yet
 > **Look ahead**: A1 notes-web `listNotes` has no tag yet · A2 each GET scans every note
 
 ### Impact map (real)
@@ -192,22 +192,22 @@ flowchart LR
 
 | Part | Guess | Real | Diff | Notes |
 |---|---|---|---|---|
-| Files | L | M | -1, still to do | Still to do: notes-web (F4). 3 change, 1 new, 0 delete, 1 repo; the guess had 2 repos. Report file not counted. (seen) |
+| Files | L | M | -1, still to do | Still to do: notes-web (F5). 3 change, 1 new, 0 delete, 1 repo; the guess had 2 repos. Report file not counted. (seen) |
 | Design | M | M | same | `db.list(tag)` gets a parameter, `db.add` takes `tags`, the GET route reads the query. No public module interface breaks. (seen) |
-| Architecture | S | S | same | No new module or dependency. `002_tags.sql` adds a `note_tags` table that no code uses, so it is a finding (F6), not L. (seen) |
-| Contracts | L | M | -1, still to do | Still to do: `docs/api.md` (F3) and the notes-web client (F4). The diff adds an optional `?tag=` and `tags` in POST and both responses; old clients still work, and no client uses them yet. (run) |
+| Architecture | S | S | same | No new module or dependency. `002_tags.sql` adds a `note_tags` table that no code uses, so it is a finding (F7), not L. (seen) |
+| Contracts | L | M | -1, still to do | Still to do: `docs/api.md` (F3) and the notes-web client (F5). The diff adds an optional `?tag=` and `tags` in POST and both responses; old clients still work, and no client uses them yet. (run) |
 | Risk | L | L | same | Data writes through a route with no route tests, and a new crash path (F1). (run) Not XL: no deploy path change. A crash wipes the in-memory notes, but the loss path is old (F2: bad JSON already crashes the API). |
 | Security | L (if no checks) | L | same | Guess for "tags go in with no checks" was L, and the diff took that case. A new input path (`tags`) with no checks (F1). (run) Not XL: the crash needs the API key; any visitor has it only through the old key-in-client hole (BEFORE F2), and old holes do not raise the size. |
-| Tests | L | S | -2, still to do | Still to do: the first route tests: `?tag=`, POST with tags, bad tags (F5). The diff adds 1 `db` test. (seen) |
+| Tests | L | S | -2, still to do | Still to do: the first route tests: `?tag=`, POST with tags, bad tags (F6). The diff adds 1 `db` test. (seen) |
 | Rollback | S | S | same | `git revert` and deploy. Not M: no code runs `002_tags.sql`, so no database holds the table. (seen) M if someone runs migrations by hand. (guess) |
 
 Overall: L, from Risk and Security. Only 2 of the 6 parts are L, so not XL.
 
 - Hits (4): `src/routes/notes.js`, `src/db.js`, `test/notes.test.js`, `src/migrations/002_tags.sql` (a "maybe" in the guess)
 - Surprises (0)
-- Missed (4): `docs/api.md` (still to do, F3), `notes-web/index.html` and `notes-web/src/app.js` (still to do, F4), `notes-web/src/api.js` (a "maybe" whose "if" came true: the filter is on the server, so it needs `listNotes(tag)`; still to do, F4)
+- Missed (4): `docs/api.md` (still to do, F3), `notes-web/index.html` and `notes-web/src/app.js` (still to do, F5), `notes-web/src/api.js` (a "maybe" whose "if" came true: the filter is on the server, so it needs `listNotes(tag)`; still to do, F5)
 - Maybe, not changed (1): `AGENTS.md:7` (lists the calls notes-web makes; add `?tag=` when notes-web uses it)
-- Questions still open (4): 2 (no update route yet), 3 (no tag limits; the match is exact and case-sensitive), 4 (`002_tags.sql` added, but no code runs it, F6), 5 (WHY is still a guess). Answered: 1 (the filter is on the server)
+- Questions still open (4): 2 (no update route yet), 3 (no tag limits; the match is exact and case-sensitive), 4 (`002_tags.sql` added, but no code runs it, F7), 5 (WHY is still a guess). Answered: 1 (the filter is on the server)
 - Not committed (0)
 - Checks: not run (no --run-checks)
 - Accuracy 50% (fair): 4 hits / (4 + 0 + 4). The guess had the right API files. The misses are the docs and the whole notes-web side, which is not started.
@@ -222,9 +222,9 @@ Sources: `.blast-radius/standards.md`, `AGENTS.md`, the BEFORE checklist. Not fo
 |---|---|---|---|
 | All HTTP input is checked. Bad input returns 400, never crashes. | `.blast-radius/standards.md` (must) | breaks (F1) | `src/routes/notes.js:11`, `src/db.js:5-6` |
 | No secrets in client code. | `.blast-radius/standards.md` (must) | follows: the diff adds none | - |
-| Every route has a test. | `.blast-radius/standards.md` (should) | breaks (F5) | `test/notes.test.js:10-13` |
-| Routes parse the URL with `new URL()`. | `.blast-radius/standards.md` (should) | follows on the changed GET line; POST and DELETE still compare raw `req.url` (F8) | `src/routes/notes.js:9-12` |
-| Use `src/http.js` helpers for JSON bodies and responses. | `.blast-radius/standards.md` (should) | follows: the diff adds no new use of the copies. The changed GET line keeps its old `json()` call (Now: F7) | `src/routes/notes.js:8,10` (line 10 changed) |
+| Every route has a test. | `.blast-radius/standards.md` (should) | breaks (F6) | `test/notes.test.js:10-13` |
+| Routes parse the URL with `new URL()`. | `.blast-radius/standards.md` (should) | follows on the changed GET line; POST and DELETE still compare raw `req.url` (F9) | `src/routes/notes.js:9-12` |
+| Use `src/http.js` helpers for JSON bodies and responses. | `.blast-radius/standards.md` (should) | follows: the diff adds no new use of the copies. The changed GET line keeps its old `json()` call (Now: F8) | `src/routes/notes.js:8,10` (line 10 changed) |
 | Layers: routes -> db. Filter in `db.js`. | `.blast-radius/standards.md` (architecture) | follows | `src/db.js:5` |
 | The API shape is in `docs/api.md`; both repos match it. | `AGENTS.md:12` | breaks (F3) | `docs/api.md:7-8` |
 
@@ -232,19 +232,20 @@ Not checked: "show note data with `textContent`" (pattern, notes-web): notes-web
 
 </details>
 
-<details><summary>Findings: health and security (11)</summary>
+<details><summary>Findings: health and security (12)</summary>
 
 | ID | Sev | Kind | Where | What | Fix |
 |---|---|---|---|---|---|
-| F1 | high | bug | `src/db.js:5` | `tags` is not checked (`src/routes/notes.js:11`). `POST /notes` with `tags: null` (or a number) gets 201. The next `GET /notes?tag=x` throws a TypeError in `n.tags.includes`; the rejection is not caught and the process exits with code 1. (run) `tags: "work"` (a string) is stored, and `?tag=or` then matches it by substring. (run) No count or length limit. Breaks the must rule at `.blast-radius/standards.md:4`. One root cause, so one finding. | One validator in POST: `tags` is an array of strings, max count and length as named constants; else 400. |
+| F1 | high | bug | `src/db.js:5` | `tags` is not checked (`src/routes/notes.js:11`). `POST /notes` with `tags: null` (or a number) gets 201. The next `GET /notes?tag=x` throws a TypeError in `n.tags.includes`; the rejection is not caught and the process exits with code 1. (run) `tags: "work"` (a string) is stored, and `?tag=or` then matches it by substring. (run) No count or length limit. Breaks the must rule at `.blast-radius/standards.md:4`. One root cause, so one finding. | One validator in POST: `tags` is an array of strings, max count and length as named constants; else 400. The same validator closes F4. |
 | F2 | high | security | `src/routes/notes.js:4` | Now: bad JSON in `POST /notes` still throws in `readBody` and the process exits with code 1. (run) Same as BEFORE F1; the diff did not fix it. | Use `readJson` from `src/http.js`; return 400 on `null`. Separate ticket or first commit. |
 | F3 | high | should-change | `docs/api.md:7-8` | The contract has no `tags` in POST body or responses, and no `?tag=` on GET. `AGENTS.md:12` says both repos must match it. (seen) | Add `tags` and `?tag=` to `docs/api.md` in this branch. |
-| F4 | medium | should-change | `notes-web/src/app.js:15` | notes-web has no change: no tag input, no tag display, no filter. WHAT says the web app filters by tag. (seen) | Do the notes-web part (`index.html`, `app.js`, `api.js` `listNotes(tag)`), or split it into its own ticket. |
-| F5 | medium | standard | `test/notes.test.js:10-13` | No route test for `GET /notes?tag=`, POST with tags, or bad tags. The new test counts a global `'work'` list, so any other test that adds a `'work'` note breaks it. (seen) | Add route tests with `createServer()`; count relative to the start. |
-| F6 | medium | should-change | `src/migrations/002_tags.sql:1` | Adds a `note_tags` table that no code runs or reads; tags live on the in-memory note (`src/db.js:6`). It also disagrees with that shape. (seen) | Drop it, or add the code that runs migrations and uses the table. |
-| F7 | medium | duplication | `src/routes/notes.js:3-8` | Now: local `readBody` and `json()` copy `readJson` and `sendJson` in `src/http.js:2-8`. The changed GET line (10) keeps its old call to the `json()` copy. (seen) | Import from `src/http.js`; delete the copies. |
-| F8 | low | smell | `src/routes/notes.js:10-12` | The same path match is done two ways: GET uses `u.pathname`, POST and DELETE compare raw `req.url`. `POST /notes?x=1` gets 405. (run) | Use `u.pathname` for all three. |
-| F9 | low | bug | `src/routes/notes.js:13` | Now: `DELETE /notes/:id` returns 204 for an id that does not exist. (seen) | Return 404 when `db.remove` gives `false`. |
+| F4 | high | security | `src/routes/notes.js:11` | Now: POST stores `title` and `text` with no checks: `{"title": 123}` gets 201. (run) Same as BEFORE F3 without the `tags` part (now F1). Breaks the must rule at `.blast-radius/standards.md:4`. | Let the F1 validator check `title` and `text` too. |
+| F5 | medium | should-change | `notes-web/src/app.js:15` | notes-web has no change: no tag input, no tag display, no filter. WHAT says the web app filters by tag. (seen) | Do the notes-web part (`index.html`, `app.js`, `api.js` `listNotes(tag)`), or split it into its own ticket. |
+| F6 | medium | standard | `test/notes.test.js:10-13` | No route test for `GET /notes?tag=`, POST with tags, or bad tags. The new test counts a global `'work'` list, so any other test that adds a `'work'` note breaks it. (seen) | Add route tests with `createServer()`; count relative to the start. |
+| F7 | medium | should-change | `src/migrations/002_tags.sql:1` | Adds a `note_tags` table that no code runs or reads; tags live on the in-memory note (`src/db.js:6`). It also disagrees with that shape. (seen) | Drop it, or add the code that runs migrations and uses the table. |
+| F8 | medium | duplication | `src/routes/notes.js:3-8` | Now: local `readBody` and `json()` copy `readJson` and `sendJson` in `src/http.js:2-8`. The changed GET line (10) keeps its old call to the `json()` copy. (seen) | Import from `src/http.js`; delete the copies. |
+| F9 | low | smell | `src/routes/notes.js:10-12` | The same path match is done two ways: GET uses `u.pathname`, POST and DELETE compare raw `req.url`. `POST /notes?x=1` gets 405. (run) | Use `u.pathname` for all three. |
+| F10 | low | bug | `src/routes/notes.js:13` | Now: `DELETE /notes/:id` returns 204 for an id that does not exist. (seen) | Return 404 when `db.remove` gives `false`. |
 
 2 more, low (Now): typo "Not foud" (`src/server.js:9`); importing `src/server.js` throws when `process.argv[1]` is undefined (`src/server.js:13`).
 
@@ -256,11 +257,11 @@ Fixed by this diff: BEFORE F4 for GET (`GET /notes?tag=work` no longer returns 4
 
 <details><summary>Merge score: how it was counted</summary>
 
-`100 - 25 x 2 (F1, F3) - 10 x 3 (F4-F6) - 3 (F8) = 17`
+`100 - 25 x 2 (F1, F3) - 10 x 3 (F5-F7) - 3 (F9) = 17`
 
-WHAT partly: no -10, because F3 and F4 already name the missing parts.
+WHAT partly: no -10, because F3 and F5 already name the missing parts.
 F3 is high: `AGENTS.md:12` is a must rule that names `docs/api.md` (quality.md).
-A score from the rule in scoring.md, not a chance. "Now:" findings (F2, F7, F9, 2 more) do not count.
+A score from the rule in scoring.md, not a chance. "Now:" findings (F2, F4, F8, F10, 2 more) do not count.
 
 </details>
 
@@ -268,8 +269,8 @@ A score from the rule in scoring.md, not a chance. "Now:" findings (F2, F7, F9, 
 
 | ID | Kind | Where | What can happen | When | Do |
 |---|---|---|---|---|---|
-| A1 | next | `notes-web/src/api.js` | The filter is on the server, so the notes-web part needs `listNotes(tag)`, not a browser filter. The BEFORE plan for notes-web is now wrong. (seen) | The notes-web tag PR starts | now: update the notes-web plan (F4) |
-| A2 | growth | `src/db.js:5` | `GET /notes?tag=` filters every note in memory on each call. (seen) It gets slow, and it cannot move to the `note_tags` table as is (F6). (guess) | Over ~100k notes (guess), or the PR that moves the store to SQLite | watch: GET time; filter in the query when the store moves |
+| A1 | next | `notes-web/src/api.js` | The filter is on the server, so the notes-web part needs `listNotes(tag)`, not a browser filter. The BEFORE plan for notes-web is now wrong. (seen) | The notes-web tag PR starts | now: update the notes-web plan (F5) |
+| A2 | growth | `src/db.js:5` | `GET /notes?tag=` filters every note in memory on each call. (seen) It gets slow, and it cannot move to the `note_tags` table as is (F7). (guess) | Over ~100k notes (guess), or the PR that moves the store to SQLite | watch: GET time; filter in the query when the store moves |
 
 </details>
 
@@ -280,7 +281,7 @@ A score from the rule in scoring.md, not a chance. "Now:" findings (F2, F7, F9, 
 | change | `src/routes/notes.js` | GET parses the URL and passes `tag` to `db.list` | seen |
 | change | `src/db.js` | `list(tag)` filter; `add` stores `tags` | seen |
 | change | `test/notes.test.js` | One `db` test for the tag filter | seen |
-| new | `src/migrations/002_tags.sql` | `note_tags` table; no code uses it (F6) | seen |
+| new | `src/migrations/002_tags.sql` | `note_tags` table; no code uses it (F7) | seen |
 
 Not counted: `docs/blast-radius/idea-add-tags-notes.md` (the BEFORE report, committed on this branch).
 Not changed (seen): `src/server.js` (`startsWith('/notes')` passes `?tag=` through), `src/http.js`, `src/auth.js`, `Dockerfile`, `.github/workflows/ci.yml`.
