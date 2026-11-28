@@ -113,7 +113,7 @@ In AFTER, confidence is about the AFTER report, not the BEFORE guess. Use the sa
 One number for the PR, from a fixed rule. It is a **score, not a chance**. Never write it as "safe" or "likely". The same findings must always give the same score.
 
 1. Start at 100.
-2. Take off for each **new** finding (the diff added it; should-change counts): high -25, medium -10, low -3. "Now:" findings take off nothing: the PR did not add them.
+2. Take off for each **new** finding (the diff added it; should-change counts): high -25, medium -10, low -3. "Now:" findings take off nothing: the PR did not add them. New findings below the findings table count too, by their IDs (quality.md).
 3. WHAT check: partly -10, no -30. Skip this when new findings already name every missing part (no double count), or in AFTER-only with no WHAT check.
 4. With `--run-checks`: -20 if a test, lint, or audit fails. Not run: 0.
 5. The lowest score is 0.

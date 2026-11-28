@@ -143,7 +143,13 @@ Size what the change adds or removes. "Now:" holes in old code do not raise the 
 
 ## Findings
 
-One table. Highest severity first. Inside one severity, new findings first, then "Now:" findings. Max 10 rows. Count the rest under the table.
+One table. Highest severity first. Inside one severity, new findings first, then "Now:" findings. Max 10 rows.
+
+More than 10 findings:
+- Fill the table with new findings first. "Now:" findings move below the table before new ones do. Inside the table, keep the order above.
+- Every **new** finding gets an ID, also below the table. The merge score names it (scoring.md).
+- A "Now:" finding below the table needs no ID. Only count it.
+- Put the rest in one line under the table: `5 more: F11 (medium), F12 (medium), F13 (low); 2 "Now:" (low)`.
 
 | ID | Sev | Kind | Where | What | Fix |
 |---|---|---|---|---|---|
