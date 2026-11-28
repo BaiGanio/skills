@@ -104,6 +104,8 @@ Rough meaning, for the reader:
 - **medium**: you saw most files. Some groups are guesses.
 - **low**: the ticket is vague, or the code is too big to check. Say what would make it higher.
 
+In AFTER, confidence is about the AFTER report, not the BEFORE guess. Use the same rules on the diff. The WHAT in the BEFORE report counts as the ticket text. Do not copy the BEFORE confidence. A diff that took a path the BEFORE report did not size does not lower it; the Compare part shows that.
+
 ## Merge score (AFTER mode)
 
 One number for the PR, from a fixed rule. It is a **score, not a chance**. Never write it as "safe" or "likely". The same findings must always give the same score.
