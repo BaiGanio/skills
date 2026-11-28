@@ -149,7 +149,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 <details><summary>Findings: health and security (<n>)</summary>
 
-<same table as BEFORE. Kinds include should-change. Add "Fixed by this diff: <old smells now gone>".>
+<same table as BEFORE. Kinds include should-change. Add "Fixed by this diff: <old smells now gone>". Add "Still open from BEFORE, outside the touched area: <BEFORE IDs, short>" when there are any.>
 
 </details>
 
