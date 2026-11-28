@@ -197,7 +197,7 @@ flowchart LR
 | Architecture | S | S | same | No new module or dependency. `002_tags.sql` adds a `note_tags` table that no code uses, so it is a finding (F7), not L. (seen) |
 | Contracts | L | L | same | `GET /notes` gets `?tag=`, POST and both responses get `tags`; old clients still work. The contract doc must change and did not (F3). (run) |
 | Risk | L | L | same | Data writes through a route with no route tests, and a new crash path (F1). (run) Not XL: no deploy path change, the store is in memory. |
-| Security | M | L | +1 | A new input path (`tags`) with no checks (F1, F4). (run) Not XL: the crash needs the API key; any visitor has it only through the old key-in-client hole (BEFORE F2), and old holes do not raise the size. |
+| Security | L (if no checks) | L | same | Guess for "tags go in with no checks" was L, and the diff took that case. A new input path (`tags`) with no checks (F1, F4). (run) Not XL: the crash needs the API key; any visitor has it only through the old key-in-client hole (BEFORE F2), and old holes do not raise the size. |
 | Tests | L | S | -2, still to do | Still to do: the first route tests: `?tag=`, POST with tags, bad tags (F6). The diff adds 1 `db` test. (seen) |
 | Rollback | S | S | same | `git revert` and deploy. Not M: no code runs `002_tags.sql`, so no database holds the table. (seen) M if someone runs migrations by hand. (guess) |
 

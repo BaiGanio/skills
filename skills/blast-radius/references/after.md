@@ -34,6 +34,7 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
    - Nothing real: write "none seen" and one reason. Do not fill the list to fill it.
 5. **Compare** (skip for AFTER-only):
    - **Guess vs real**: one row per sized part. Guess size, real size, and the step difference ("same", "+1", "-1").
+     - When the BEFORE Notes named a size for a case ("L if X") and the diff took that case, compare with that size, not the main size. Write the guess as "L (if X)" and say in Notes: "guess for X was L". The overall guess stays as BEFORE wrote it.
      - When the real size is smaller only because work is not done yet, write the difference as "-1, still to do". Start Notes with "Still to do:" and name the Missed file or the finding. This is not a guess error.
    - **WHAT check**: does the diff do what WHAT said? yes, partly, or no, and why.
    - **Hits**: files in the guess that changed. A "maybe" that changed is a hit.
