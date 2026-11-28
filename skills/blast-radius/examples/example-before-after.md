@@ -158,7 +158,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 
 ```mermaid
 flowchart LR
-  Route[GET/POST /notes]:::l --> Store[db.js list, add]:::m
+  Route[GET/POST /notes]:::m --> Store[db.js list, add]:::m
   Test[db tag test]:::s --> Store
   Mig[002_tags.sql unused]:::s
   Route -.-> Doc[docs/api.md to do]
@@ -167,7 +167,6 @@ flowchart LR
   class Doc,Web todo
   classDef s fill:#d4edda,stroke:#28a745,color:#000
   classDef m fill:#fff3cd,stroke:#d39e00,color:#000
-  classDef l fill:#ffe0b2,stroke:#e8590c,color:#000
   classDef same fill:#eeeeee,stroke:#999999,color:#555
   classDef todo fill:#ffffff,stroke:#666666,color:#555,stroke-dasharray: 2 2
 ```
@@ -196,13 +195,13 @@ flowchart LR
 | Files | L | M | -1, still to do | Still to do: notes-web (F4). 3 change, 1 new, 0 delete, 1 repo; the guess had 2 repos. Report file not counted. (seen) |
 | Design | M | M | same | `db.list(tag)` gets a parameter, `db.add` takes `tags`, the GET route reads the query. No public module interface breaks. (seen) |
 | Architecture | S | S | same | No new module or dependency. `002_tags.sql` adds a `note_tags` table that no code uses, so it is a finding (F6), not L. (seen) |
-| Contracts | L | L | same | `GET /notes` gets `?tag=`, POST and both responses get `tags`; old clients still work. The contract doc must change and did not (F3). (run) |
+| Contracts | L | M | -1, still to do | Still to do: `docs/api.md` (F3) and the notes-web client (F4). The diff adds an optional `?tag=` and `tags` in POST and both responses; old clients still work, and no client uses them yet. (run) |
 | Risk | L | L | same | Data writes through a route with no route tests, and a new crash path (F1). (run) Not XL: no deploy path change. A crash wipes the in-memory notes, but the loss path is old (F2: bad JSON already crashes the API). |
 | Security | L (if no checks) | L | same | Guess for "tags go in with no checks" was L, and the diff took that case. A new input path (`tags`) with no checks (F1). (run) Not XL: the crash needs the API key; any visitor has it only through the old key-in-client hole (BEFORE F2), and old holes do not raise the size. |
 | Tests | L | S | -2, still to do | Still to do: the first route tests: `?tag=`, POST with tags, bad tags (F5). The diff adds 1 `db` test. (seen) |
 | Rollback | S | S | same | `git revert` and deploy. Not M: no code runs `002_tags.sql`, so no database holds the table. (seen) M if someone runs migrations by hand. (guess) |
 
-Overall: L, from Contracts, Risk, and Security. Only 3 of the 6 parts are L, so not XL.
+Overall: L, from Risk and Security. Only 2 of the 6 parts are L, so not XL.
 
 - Hits (4): `src/routes/notes.js`, `src/db.js`, `test/notes.test.js`, `src/migrations/002_tags.sql` (a "maybe" in the guess)
 - Surprises (0)

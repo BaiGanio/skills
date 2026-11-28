@@ -46,6 +46,8 @@ A new route or endpoint counts under Contracts, not Design. In Design, only coun
 
 Example: an API response gets a new optional `tags` field. If no client must change to keep working, and no client uses it in this ticket: **M**. If a client in this ticket starts to use it, or the contract doc must change: **L**. If an old client breaks: **XL**. A new client of an existing endpoint, with no change to the endpoint: **M**.
 
+In AFTER, size the contract change the diff made (after.md step 3). A client that does not use the field yet, or a contract doc that still needs the change, is work still to do: a should-change finding, not a reason for L. Example: the diff adds an optional `tags` field and `?tag=`, no client uses them yet, and `docs/api.md` did not change: **M**, "-1, still to do".
+
 | Size | Meaning |
 |---|---|
 | S | None. |
