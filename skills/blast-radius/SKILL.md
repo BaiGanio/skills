@@ -170,7 +170,7 @@ Two kinds of finding:
 - **New**: the change adds it (AFTER), or the plan would add it (BEFORE).
 - **Now**: it exists already in the touched area. Start the text with "Now:". It does not raise the Security size or the overall size. If it is high, suggest a separate ticket first.
 
-The header counts both, apart. BEFORE puts "now" first (`now 2 high, 4 low · new 0`), because a plan rarely adds findings yet. AFTER puts the diff's findings first (`findings 1 high · now 2 high`). The counts include the rows that did not fit in the table.
+The header counts both, apart. BEFORE puts "now" first (`now 2 high, 4 low · new 0`), because a plan rarely adds findings yet. AFTER puts the diff's findings first (`findings 1 high · now 2 high`). The counts include the rows that did not fit in the table. The same is true for the "Findings (<n>)" summary in the report (every finding, new and "Now:") and for the counts on the chat summary's `Findings:` line.
 
 ## 7. Draw
 
@@ -228,6 +228,8 @@ Report: <path or URL, or "not written (dry run)">
 ```
 
 In AFTER, leave out "<n> maybe" on the Files line: the diff has no maybe files.
+
+On the `Findings:` line, the first counts are the **new** findings only. `now:` counts the high "Now:" findings. Both include the findings below the table.
 
 The ASCII impact map has max 5 lines, and connector lines (`|`, `+-->`) count toward the 5. The whole summary stays max 14 lines.
 
