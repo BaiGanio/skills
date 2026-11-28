@@ -222,7 +222,7 @@ WHAT: <one line>
 Files: <n> change, <n> new, <n> delete, <n> maybe · repos: <n> · security <S|M|L|XL>
 Findings: <n> high, <n> medium, <n> low · now: <n> high · top: <F1, short>
 [AFTER: score <n> <call> · guess <size>→<size> · accuracy <n>% · FIT <n>/<n> · ahead <n>]
-[Tests: <n>/<n> done-when proved · <the worst test problem, short>]
+[Tests: <n>/<n> done-when proved · <the worst test finding, or the biggest Done-when gap (report.md "Test trust"), short>]
 Questions: <n, or "none">
 Report: <path or URL, or "not written (dry run)">
 ```
