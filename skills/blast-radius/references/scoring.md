@@ -107,7 +107,7 @@ One number for the PR, from a fixed rule. It is a **score, not a chance**. Never
 
 1. Start at 100.
 2. Take off for each **new** finding (the diff added it; should-change counts): high -25, medium -10, low -3. "Now:" findings take off nothing: the PR did not add them.
-3. WHAT check: partly -10, no -30. Skip this when a should-change finding already names the missing part (no double count), or in AFTER-only with no WHAT check.
+3. WHAT check: partly -10, no -30. Skip this when new findings already name every missing part (no double count), or in AFTER-only with no WHAT check.
 4. With `--run-checks`: -20 if a test, lint, or audit fails. Not run: 0.
 5. The lowest score is 0.
 6. Any new high finding: the score is at most 49.
