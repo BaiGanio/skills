@@ -129,6 +129,8 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 | Tests | L | S | -2, still to do | Still to do: <the missing work> (<Missed file or F-ID>) |
 | Rollback | ... | ... | ... | ... |
 
+Overall: <real size: which rule gave it (scoring.md "Overall size")>.
+
 - Hits (<n>): `a`, `b`
 - Surprises (<n>): `c` (<why>)
 - Missed (<n>): `d` (<still to do, or wrong guess?>)
@@ -171,6 +173,18 @@ A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
 
 </details>
 
+<details><summary>Files (<n>)</summary>
+
+| Group | File | Why | Tag |
+|---|---|---|---|
+| change | `path/to/file` | <what the diff did> | seen |
+| new | `path/to/new` | <what the diff did> | seen |
+
+Not counted: <the report file, lock files, vendored files, or leave this line out>
+Not changed (seen): <files a reader may expect to change but did not, or leave this line out>
+
+</details>
+
 <sub>Made by blast-radius v0.6.2</sub>
 ```
 
@@ -181,7 +195,6 @@ A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
 - Add an "Open questions" section after the impact map, like in BEFORE.
 - Do not use the dashed "surprise" style. Use `todo` for should-change files and repos.
 - Replace "Guess vs real" with "Impact: size per part" from the BEFORE template, using a "Real" column.
-- Add a closed "Files" block like in BEFORE.
 
 ## Link comment on the issue (AFTER, issue mode)
 
