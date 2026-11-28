@@ -27,8 +27,9 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
 
    Each item gets an ID (A1, A2, ...), a kind, a place (`file:line`), what can happen, **when** it bites (the trigger), and one action: `now: <fix>` or `watch: <signal>`. Max 5, most likely first. Tag each item (often **guess**). When a probe proved the fact under the risk, tag that fact **run**.
    - Only risks that are not bugs today. A bug today is a finding (F). Do not list it twice.
-   - An item may build on a finding when it names a different, later cost (finding: "unused migration"; item: "tags then live in two places"). Add "see F6".
+   - An item may build on a finding only when it names a cost that the finding does not name (finding: "unused migration"; item: "tags then live in two places"). Add "see F6". The same file or the same problem is not a new cost.
    - When the action is already a finding's fix, write `now: see F2`. Do not write the fix again.
+   - An item with no new cost and only `now: see F<n>` as its action is a repeat. Leave it out.
    - Nothing real: write "none seen" and one reason. Do not fill the list to fill it.
 5. **Compare** (skip for AFTER-only):
    - **Guess vs real**: one row per sized part. Guess size, real size, and the step difference ("same", "+1", "-1").
