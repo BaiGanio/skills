@@ -68,6 +68,7 @@ Sources: <files found>. Not found: <for example "no ADRs, no lint config">.
 | F1 | high | security | `file:line` | Now: <what> (run) | <fix> |
 
 Reuse: <existing code to reuse, with file:line, or leave out>
+Probes: <what the probes patched, for example "set `process.argv[1]`", or leave out>
 
 </details>
 
@@ -151,7 +152,7 @@ Overall: <real size: which rule gave it (scoring.md "Overall size")>.
 
 <details><summary>Findings: health and security (<n>)</summary>
 
-<same table as BEFORE. Kinds include should-change. Add "Fixed by this diff: <old smells now gone>". Add "Still open from BEFORE, outside the touched area: <BEFORE IDs, short>" when there are any.>
+<same table as BEFORE. Kinds include should-change. Add "Fixed by this diff: <old smells now gone>". Add "Still open from BEFORE, outside the touched area: <BEFORE IDs, short>" when there are any. Add the "Probes:" line when a probe patched something.>
 
 </details>
 
