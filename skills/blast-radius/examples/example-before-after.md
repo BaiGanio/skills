@@ -145,7 +145,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 <!-- blast-radius:after id=idea-add-tags-notes version=1 date=2026-11-27 -->
 ## Blast radius AFTER: Add tags to notes
 
-**Merge score 17/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 50% · 4 file(s) · 1 repo(s) · security L · findings 2 high, 3 medium, 1 low · now 2 high, 1 medium, 3 low · PR: branch feat/tags (no PR)
+**Merge score 17/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 50% · 4 file(s) · 1 repo(s) · security L · findings 2 high, 3 medium, 1 low · now 2 high, 2 medium, 3 low · PR: branch feat/tags (no PR)
 
 > **Merge score**: 17/100, not ready. Bug risk: high (F1, run). Fix first: F1, F3.
 > **WHAT check**: partly. The API stores tags, returns them, and filters with `GET /notes?tag=`. Bad tags do not get 400, `docs/api.md` is not updated, and notes-web has no tag input or filter yet.
@@ -223,7 +223,7 @@ Sources: `.blast-radius/standards.md`, `AGENTS.md`, the BEFORE checklist. Not fo
 | All HTTP input is checked. Bad input returns 400, never crashes. | `.blast-radius/standards.md` (must) | breaks (F1) | `src/routes/notes.js:11`, `src/db.js:5-6` |
 | No secrets in client code. | `.blast-radius/standards.md` (must) | follows: the diff adds none | - |
 | Every route has a test. | `.blast-radius/standards.md` (should) | breaks (F6) | `test/notes.test.js:10-13` |
-| Routes parse the URL with `new URL()`. | `.blast-radius/standards.md` (should) | follows on the changed GET line; POST and DELETE still compare raw `req.url` (F9) | `src/routes/notes.js:9-12` |
+| Routes parse the URL with `new URL()`. | `.blast-radius/standards.md` (should) | follows on the changed GET line; POST and DELETE still compare raw `req.url` (Now: F9; the "two ways" smell is F10) | `src/routes/notes.js:9-12` |
 | Use `src/http.js` helpers for JSON bodies and responses. | `.blast-radius/standards.md` (should) | follows: the diff adds no new use of the copies. The changed GET line keeps its old `json()` call (Now: F8) | `src/routes/notes.js:8,10` (line 10 changed) |
 | Layers: routes -> db. Filter in `db.js`. | `.blast-radius/standards.md` (architecture) | follows | `src/db.js:5` |
 | The API shape is in `docs/api.md`; both repos match it. | `AGENTS.md:12` | breaks (F3) | `docs/api.md:7-8` |
@@ -232,7 +232,7 @@ Not checked: "show note data with `textContent`" (pattern, notes-web): notes-web
 
 </details>
 
-<details><summary>Findings: health and security (12)</summary>
+<details><summary>Findings: health and security (13)</summary>
 
 | ID | Sev | Kind | Where | What | Fix |
 |---|---|---|---|---|---|
@@ -244,10 +244,10 @@ Not checked: "show note data with `textContent`" (pattern, notes-web): notes-web
 | F6 | medium | standard | `test/notes.test.js:10-13` | No route test for `GET /notes?tag=`, POST with tags, or bad tags. The new test counts a global `'work'` list, so any other test that adds a `'work'` note breaks it. (seen) | Add route tests with `createServer()`; count relative to the start. |
 | F7 | medium | should-change | `src/migrations/002_tags.sql:1` | Adds a `note_tags` table that no code runs or reads; tags live on the in-memory note (`src/db.js:6`). It also disagrees with that shape. (seen) | Drop it, or add the code that runs migrations and uses the table. |
 | F8 | medium | duplication | `src/routes/notes.js:3-8` | Now: local `readBody` and `json()` copy `readJson` and `sendJson` in `src/http.js:2-8`. The changed GET line (10) keeps its old call to the `json()` copy. (seen) | Import from `src/http.js`; delete the copies. |
-| F9 | low | smell | `src/routes/notes.js:10-12` | The same path match is done two ways: GET uses `u.pathname`, POST and DELETE compare raw `req.url`. `POST /notes?x=1` gets 405. (run) | Use `u.pathname` for all three. |
-| F10 | low | bug | `src/routes/notes.js:13` | Now: `DELETE /notes/:id` returns 204 for an id that does not exist. (seen) | Return 404 when `db.remove` gives `false`. |
+| F9 | medium | standard | `src/routes/notes.js:11-12` | Now: POST and DELETE still compare raw `req.url`, which breaks the should rule "Routes parse the URL with `new URL()`". Same as BEFORE F4; the diff fixed it for GET only. (seen) | Use `u.pathname` for all three (the same fix closes F10). |
+| F10 | low | smell | `src/routes/notes.js:10-12` | The same path match is done two ways: GET uses `u.pathname`, POST and DELETE compare raw `req.url`. The diff made this split. `POST /notes?x=1` gets 405. (run) | Use `u.pathname` for all three (the same fix closes F9). |
 
-2 more, low (Now): typo "Not foud" (`src/server.js:9`); importing `src/server.js` throws when `process.argv[1]` is undefined (`src/server.js:13`).
+3 more, low (Now): `DELETE /notes/:id` returns 204 for an id that does not exist (`src/routes/notes.js:13`); typo "Not foud" (`src/server.js:9`); importing `src/server.js` throws when `process.argv[1]` is undefined (`src/server.js:13`).
 
 Still open from BEFORE, outside the touched area: BEFORE F2 (API key in client code, `notes-web/src/config.js:2`, fallback `src/auth.js:2`), BEFORE F5 (click on a note deletes it), BEFORE F10 (no `r.ok` check in `notes-web/src/api.js`).
 
@@ -257,11 +257,11 @@ Fixed by this diff: BEFORE F4 for GET (`GET /notes?tag=work` no longer returns 4
 
 <details><summary>Merge score: how it was counted</summary>
 
-`100 - 25 x 2 (F1, F3) - 10 x 3 (F5-F7) - 3 (F9) = 17`
+`100 - 25 x 2 (F1, F3) - 10 x 3 (F5-F7) - 3 (F10) = 17`
 
 WHAT partly: no -10, because F3 and F5 already name the missing parts.
 F3 is high: `AGENTS.md:12` is a must rule that names `docs/api.md` (quality.md).
-A score from the rule in scoring.md, not a chance. "Now:" findings (F2, F4, F8, F10, 2 more) do not count.
+A score from the rule in scoring.md, not a chance. "Now:" findings (F2, F4, F8, F9, 3 more) do not count.
 
 </details>
 
