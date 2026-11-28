@@ -73,7 +73,7 @@ Scope: the change list plus one level of callers. Not the whole repo.
 - A function over ~50 lines, or nesting deeper than 3.
 - A file that does many unrelated jobs.
 - Magic values: numbers or strings that should be named or config.
-- Dead code, commented-out code, unused exports, unused migrations or config.
+- Dead code, commented-out code, unused exports, unused migrations or config. This smell is for old code ("Now:"). In AFTER, code the diff added that nothing uses is a **should-change** finding, not a smell (after.md step 3).
 - Errors that are swallowed, or async code with no error path.
 - Input used with no check.
 - The same logic done two ways in the same area (for example one route parses the URL, the next compares the raw string).
