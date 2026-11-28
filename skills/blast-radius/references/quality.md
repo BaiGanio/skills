@@ -50,6 +50,11 @@ For each rule that applies:
 - **breaks**: it does not. This is also a finding (high for a must rule, medium for a should rule or an ADR, low for a pattern).
 - **unclear**: you cannot tell yet (often in BEFORE). Say what decides it.
 
+In AFTER, check only what the diff adds:
+- A new line, or a new use of the broken way (a new call to a copy, a new raw compare), that breaks a rule: **breaks**, and a new finding.
+- A line the diff did not touch, also in a changed function: not a FIT break. If it matters, it is a "Now:" finding.
+- A changed line that keeps an old break as it was (the same call, only its arguments changed): not a FIT break. It is a "Now:" finding. Say in the Where cell that the line changed.
+
 Also check the architecture fit, even with no written rules:
 - Does the change put code in the layer and folder where similar code lives?
 - Does it add a second way to do something the project already does one way (a second HTTP client, a second config loader, a second date library)?

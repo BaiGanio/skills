@@ -149,7 +149,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 
 > **Merge score**: 7/100, not ready. Bug risk: high (F1, run). Fix first: F1, F3, F4.
 > **WHAT check**: partly. The API stores tags, returns them, and filters with `GET /notes?tag=`. Bad tags do not get 400, `docs/api.md` is not updated, and notes-web has no tag input or filter yet.
-> **FIT check**: 3 of 7 rules followed. Worst break: `tags` is not checked, and one bad value can crash the API (F1).
+> **FIT check**: 4 of 7 rules followed. Worst break: `tags` is not checked, and one bad value can crash the API (F1).
 > **Biggest surprise**: the filter went to the server (`?tag=`, open question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F7).
 > **Top findings**: F1 `tags: null` plus `GET /notes?tag=x` crashes the API · F3 `docs/api.md` not updated · F4 `tags` has no type, count, or length check
 > **Look ahead**: A1 each GET scans every note · A2 notes-web `listNotes` has no tag yet
@@ -215,7 +215,7 @@ Overall: L, from Contracts, Risk, and Security. Only 3 of the 6 parts are L, so 
 
 </details>
 
-<details><summary>Fit: project rules (3 follow, 4 break)</summary>
+<details><summary>Fit: project rules (4 follow, 3 break)</summary>
 
 Sources: `.blast-radius/standards.md`, `AGENTS.md`, the BEFORE checklist. Not found: CLAUDE.md, CONTRIBUTING.md, ADRs, lint or format config.
 
@@ -225,7 +225,7 @@ Sources: `.blast-radius/standards.md`, `AGENTS.md`, the BEFORE checklist. Not fo
 | No secrets in client code. | `.blast-radius/standards.md` (must) | follows: the diff adds none | - |
 | Every route has a test. | `.blast-radius/standards.md` (should) | breaks (F6) | `test/notes.test.js:10-13` |
 | Routes parse the URL with `new URL()`. | `.blast-radius/standards.md` (should) | follows on the changed GET line; POST and DELETE still compare raw `req.url` (F9) | `src/routes/notes.js:9-12` |
-| Use `src/http.js` helpers for JSON bodies and responses. | `.blast-radius/standards.md` (should) | breaks (F8): the new GET line uses the local `json()` copy | `src/routes/notes.js:8,10` |
+| Use `src/http.js` helpers for JSON bodies and responses. | `.blast-radius/standards.md` (should) | follows: the diff adds no new use of the copies. The changed GET line keeps its old `json()` call (Now: F8) | `src/routes/notes.js:8,10` (line 10 changed) |
 | Layers: routes -> db. Filter in `db.js`. | `.blast-radius/standards.md` (architecture) | follows | `src/db.js:5` |
 | The API shape is in `docs/api.md`; both repos match it. | `AGENTS.md:12` | breaks (F3) | `docs/api.md:7-8` |
 
@@ -244,7 +244,7 @@ Not checked: "show note data with `textContent`" (pattern, notes-web): notes-web
 | F5 | medium | should-change | `notes-web/src/app.js:15` | notes-web has no change: no tag input, no tag display, no filter. WHAT says the web app filters by tag. (seen) | Do the notes-web part (`index.html`, `app.js`, `api.js` `listNotes(tag)`), or split it into its own ticket. |
 | F6 | medium | standard | `test/notes.test.js:10-13` | No route test for `GET /notes?tag=`, POST with tags, or bad tags. The new test counts a global `'work'` list, so any other test that adds a `'work'` note breaks it. (seen) | Add route tests with `createServer()`; count relative to the start. |
 | F7 | medium | should-change | `src/migrations/002_tags.sql:1` | Adds a `note_tags` table that no code runs or reads; tags live on the in-memory note (`src/db.js:6`). It also disagrees with that shape. (seen) | Drop it, or add the code that runs migrations and uses the table. |
-| F8 | medium | duplication | `src/routes/notes.js:3-8` | Now: local `readBody` and `json()` copy `readJson` and `sendJson` in `src/http.js:2-8`. The diff adds a new call to the copy (line 10). (seen) | Import from `src/http.js`; delete the copies. |
+| F8 | medium | duplication | `src/routes/notes.js:3-8` | Now: local `readBody` and `json()` copy `readJson` and `sendJson` in `src/http.js:2-8`. The changed GET line (10) keeps its old call to the `json()` copy. (seen) | Import from `src/http.js`; delete the copies. |
 | F9 | low | smell | `src/routes/notes.js:10-12` | The same path match is done two ways: GET uses `u.pathname`, POST and DELETE compare raw `req.url`. `POST /notes?x=1` gets 405. (run) | Use `u.pathname` for all three. |
 | F10 | low | bug | `src/routes/notes.js:13` | Now: `DELETE /notes/:id` returns 204 for an id that does not exist. (seen) | Return 404 when `db.remove` gives `false`. |
 
