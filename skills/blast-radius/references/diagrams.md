@@ -6,7 +6,7 @@ Small diagrams only. They show where the change lands, not the whole system.
 
 - Max 10 boxes per diagram. If there are more, group them (for example "5 route files").
 - Max 4 words per label.
-- Color by how much that box changes: S green (a small edit), M yellow (new functions or fields), L orange (a new module, or a contract change), XL red (a rewrite, or a breaking change). Things that do not change: grey. "Maybe" items: grey with a dashed border.
+- Color by how much that box changes: S green (a small edit), M yellow (new functions or fields), L orange (a new module, or a contract change), XL red (a rewrite, or a breaking change). A box gets the biggest size of the parts it touches (Design, Architecture, Contracts). Example: a route box with Design M that changes a public API (Contracts L) is L. Things that do not change: grey. "Maybe" items: grey with a dashed border.
 - Use `flowchart LR` (left to right). It fits in a comment.
 - In Azure DevOps comments and in the chat, use the ASCII form. Mark the size in brackets: `[L]`.
 - Do not add a legend box. The colors are explained in one line under the diagram.

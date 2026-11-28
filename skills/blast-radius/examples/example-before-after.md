@@ -14,7 +14,7 @@
 
 ```mermaid
 flowchart LR
-  Form[Web form + list]:::m --> Route[POST/GET /notes]:::m
+  Form[Web form + list]:::m --> Route[POST/GET /notes]:::l
   Route --> Store[db.js store]:::s
   Route -.-> Contract[docs/api.md]:::l
   Tests[Route tests]:::l --> Route
@@ -158,7 +158,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 
 ```mermaid
 flowchart LR
-  Route[GET/POST /notes]:::m --> Store[db.js list, add]:::m
+  Route[GET/POST /notes]:::l --> Store[db.js list, add]:::m
   Test[db tag test]:::s --> Store
   Mig[002_tags.sql unused]:::s
   Route -.-> Doc[docs/api.md to do]
@@ -167,6 +167,7 @@ flowchart LR
   class Doc,Web todo
   classDef s fill:#d4edda,stroke:#28a745,color:#000
   classDef m fill:#fff3cd,stroke:#d39e00,color:#000
+  classDef l fill:#ffe0b2,stroke:#e8590c,color:#000
   classDef same fill:#eeeeee,stroke:#999999,color:#555
   classDef todo fill:#ffffff,stroke:#666666,color:#555,stroke-dasharray: 2 2
 ```
