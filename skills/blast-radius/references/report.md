@@ -106,7 +106,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 **Merge score <n>/100** (<ready|fix first|not ready>) · **Size <real>** (guess was <guess>) · confidence <high|medium|low> · accuracy <n>% · <n> file(s) · <n> repo(s) · security <size> · findings <n> high, <n> medium, <n> low · now <n> high, <n> medium, <n> low · PR: <link, or "branch <name> (no PR)">
 
-> **Merge score**: <n>/100, <call>. Bug risk: <high|medium|low> (<IDs, tag>). <Fix first: F1, F3>
+> **Merge score**: <n>/100, <call>. Bug risk: <high|medium|low> (<IDs, tag>). <Fix first: the findings to fix (scoring.md), for example F1, F2>
 > **WHAT check**: <yes / partly / no>. <why, one line>
 > **FIT check**: <n> of <n> rules followed. <the worst break, or "all followed">
 > **Biggest surprise**: <one line>

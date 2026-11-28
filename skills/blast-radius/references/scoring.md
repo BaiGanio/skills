@@ -125,6 +125,8 @@ One number for the PR, from a fixed rule. It is a **score, not a chance**. Never
 | 50-79 | fix first: <the findings to fix> |
 | 0-49 | not ready: <the findings to fix> |
 
+**The findings to fix**: the new findings of the highest severity there is. That is every new high finding. With no new high, it is every new medium one. Leave it out for "ready". "Now:" findings are never in this list.
+
 **Bug risk**, next to the score: **high** when a new high finding of kind bug or security exists, **medium** when a new medium one exists, else **low**. Name the IDs and the best tag (`high (F1, run)`).
 
 Show the math in one line: `100 - 25 (F1) - 10 x 5 (F2-F6) - 3 (F7) - 10 (WHAT partly) = 12`.
