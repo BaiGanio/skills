@@ -126,7 +126,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 | Contracts | ... | ... | ... | ... |
 | Risk | ... | ... | ... | ... |
 | Security | ... | ... | ... | ... |
-| Tests | ... | ... | ... | ... |
+| Tests | L | S | -2, still to do | Still to do: <the missing work> (<Missed file or F-ID>) |
 | Rollback | ... | ... | ... | ... |
 
 - Hits (<n>): `a`, `b`

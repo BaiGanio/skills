@@ -14,7 +14,7 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
    6. `docs/blast-radius/branch-<branch>.md`.
    7. A file in `docs/blast-radius/` whose name shares 1+ word (not "feat", "fix", "add") with the branch name, the PR title, or the commit subjects. If only one report file exists, offer it. Ask: "Compare with <file>?"
    8. Else ask once: "I found no BEFORE report. Give me a ticket ID or a file, or I make an AFTER-only report."
-3. **Measure the real impact.** Do steps 3-7 on the diff. Size what the diff **did**. Work the change still needs goes to **Missed** and to should-change findings, not into the sizes. Keep WHAT and WHY (from the ticket, else from the commit messages, tagged guess).
+3. **Measure the real impact.** Do steps 3-7 on the diff. Size what the diff **did**. Use the tables in scoring.md on the diff, also where a table speaks of what the change needs (Tests). Work the change still needs goes to **Missed** and to should-change findings, not into the sizes. Keep WHAT and WHY (from the ticket, else from the commit messages, tagged guess).
    - **Should have changed**: files the diff did not touch, but that describe what the diff changed (a contract doc, an API spec, a client in another repo). Also code the diff added that nothing uses (a migration no code runs). List them as findings.
    - Confidence for AFTER-only with no ticket: max **medium**.
 4. **Look ahead.** Findings say what is wrong in the diff now. Look ahead says what the diff can cause later. Check the touched area plus one level out:
@@ -33,6 +33,7 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
    - Nothing real: write "none seen" and one reason. Do not fill the list to fill it.
 5. **Compare** (skip for AFTER-only):
    - **Guess vs real**: one row per sized part. Guess size, real size, and the step difference ("same", "+1", "-1").
+     - When the real size is smaller only because work is not done yet, write the difference as "-1, still to do". Start Notes with "Still to do:" and name the Missed file or the finding. This is not a guess error.
    - **WHAT check**: does the diff do what WHAT said? yes, partly, or no, and why.
    - **Hits**: files in the guess that changed. A "maybe" that changed is a hit.
    - **Surprises**: files that changed but were not in the guess. Say why, if you can see it.

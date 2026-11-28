@@ -7,6 +7,7 @@ Each sized part gets S, M, L, or XL. Find the biggest fact for that part. Pick t
 - Between two sizes: pick the lower one, and say why it is not the higher one.
 - Size depends on an open choice: size the simplest choice that meets the ticket, and write "L if <other choice>".
 - Size the work for **this change**, not the state of the whole repo.
+- In AFTER, size what the diff did (after.md step 3). Example: a diff that adds 1 small test is Tests **S**, also when the change needs **L**. The rest is "still to do".
 
 ## Files
 

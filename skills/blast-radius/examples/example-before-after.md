@@ -193,13 +193,13 @@ flowchart LR
 
 | Part | Guess | Real | Diff | Notes |
 |---|---|---|---|---|
-| Files | L | M | -1 | 3 change, 1 new, 0 delete, 1 repo. The guess had 2 repos; notes-web has no change yet (F5). Report file not counted. (seen) |
+| Files | L | M | -1, still to do | Still to do: notes-web (F5). 3 change, 1 new, 0 delete, 1 repo; the guess had 2 repos. Report file not counted. (seen) |
 | Design | M | M | same | `db.list(tag)` gets a parameter, `db.add` takes `tags`, the GET route reads the query. No public module interface breaks. (seen) |
 | Architecture | S | S | same | No new module or dependency. `002_tags.sql` adds a `note_tags` table that no code uses, so it is a finding (F7), not L. (seen) |
 | Contracts | L | L | same | `GET /notes` gets `?tag=`, POST and both responses get `tags`; old clients still work. The contract doc must change and did not (F3). (run) |
 | Risk | L | L | same | Data writes through a route with no route tests, and a new crash path (F1). (run) Not XL: no deploy path change, the store is in memory. |
 | Security | M | L | +1 | A new input path (`tags`) with no checks (F1, F4). (run) Not XL: the crash needs the API key; any visitor has it only through the old key-in-client hole (BEFORE F2), and old holes do not raise the size. |
-| Tests | L | L | same | The diff adds 1 `db` test. The change still needs the first route tests: `?tag=`, POST with tags, bad tags (F6). (seen) |
+| Tests | L | S | -2, still to do | Still to do: the first route tests: `?tag=`, POST with tags, bad tags (F6). The diff adds 1 `db` test. (seen) |
 | Rollback | S | S | same | `git revert` and deploy. Not M: no code runs `002_tags.sql`, so no database holds the table. (seen) M if someone runs migrations by hand. (guess) |
 
 Overall: L, from Contracts, Risk, and Security. Only 3 of the 6 parts are L, so not XL.
