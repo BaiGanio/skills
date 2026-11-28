@@ -199,7 +199,7 @@ Read [references/report.md](references/report.md) for the template and the hidde
 
 ### Order
 
-1. If an older report exists (a comment with the marker, or the file), do not add a second one. Move the old text into the "History" block (see report.md), then put the new text on top. Edit the comment in place.
+1. If an older report of the **same mode** exists (a comment with the marker, or the file), do not add a second one. Move the old text into the "History" block (see report.md), then put the new text on top. Edit the comment in place. This is for a re-run: BEFORE again, or AFTER again. An AFTER run on a BEFORE report does not use History: it adds the "After" section under the BEFORE text and keeps the BEFORE text (after.md step 7).
 2. With `--dry-run`: print the full report, then the chat summary, and stop.
 3. Else write or post. Do not print the report in the chat.
 4. Print the chat summary once, as the last thing.
