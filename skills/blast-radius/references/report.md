@@ -109,7 +109,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 > **Merge score**: <n>/100, <call>. Bug risk: <high|medium|low> (<IDs, tag>). <Fix first: the findings to fix (scoring.md), for example F1, F2>
 > **WHAT check**: <yes / partly / no>. <why, one line>
 > **FIT check**: <n> of <n> rules followed. <the worst break, or "all followed">
-> **Test trust**: <n> of <n> "Done when" checks proved. <the worst **test** finding (F-ID). With no **test** finding: "No drift or cheating seen", then the biggest gap in the Done-when table (a "no" row, else a "partly" row, and its finding, often a missing test). With no gap there: only "no drift or cheating seen".>
+> **Test trust**: <n> of <n> "Done when" checks proved. <the worst **test** finding (F-ID). With no **test** finding: "No drift or cheating seen", then the biggest gap in the Done-when table (a "no" row, else a "partly" row, and its finding, often a missing test). With two such rows, take the one whose finding has the highest severity; on a tie, the first in WHAT order. When that row has two findings, name the one with the highest severity first, then the missing-test finding: "(F1; no route test, F6)". With no gap there: only "no drift or cheating seen".>
 > **Biggest surprise**: <one line>
 > **Top findings**: F1 <one line> · F2 <one line> · F3 <one line> (new findings first, highest first; a "Now:" high only when fewer than 3 new ones)
 > **Look ahead**: A1 <one line> · A2 <one line> (max 2), or "none seen: <reason>"
