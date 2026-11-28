@@ -4,7 +4,7 @@ Read this file only in AFTER mode. It replaces nothing in SKILL.md: the steps th
 
 1. **Get the diff.**
    - PR: see sources.md.
-   - Branch: `git diff --stat <base>...HEAD` and `git diff <base>...HEAD`. Also list uncommitted changes (`git status --short`) apart. Say if the work is not committed yet.
+   - Branch: `git diff --stat <base>...HEAD` and `git diff <base>...HEAD`. Also list uncommitted changes (`git status --short`) apart. Say if the work is not committed yet. Leave `docs/blast-radius/` out of this list, as in SKILL.md: it holds reports, not code. The report file this run writes is never uncommitted work.
 2. **Find the BEFORE report.** Stop at the first hit.
    1. `--id`.
    2. The PR's linked issues (`closingIssuesReferences`, `AB#1234` in the PR text).

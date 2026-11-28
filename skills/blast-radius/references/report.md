@@ -138,7 +138,7 @@ Overall: <real size: which rule gave it (scoring.md "Overall size")>.
 - Missed (<n>): `d` (<still to do, or wrong guess?>)
 - Maybe, not changed (<n>): `e` (<why it is not needed yet>)
 - Questions still open (<n>): <BEFORE question numbers, each with a short why, or "none">. Answered: <numbers, with how>
-- Not committed (<n>): `f`
+- Not committed (<n>): `f` (code only: leave out `docs/blast-radius/`, after.md step 1)
 - Checks: <tests / lint / audit: pass, fail, or "not run (no --run-checks)">
 
 </details>
