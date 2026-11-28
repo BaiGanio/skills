@@ -90,7 +90,7 @@ Not changed (seen): <files a reader may expect to change but do not, or leave th
 
 </details>
 
-<sub>Made by blast-radius v0.6.1</sub>
+<sub>Made by blast-radius v0.6.2</sub>
 ```
 
 If there is no older version, leave out the History block.
@@ -132,7 +132,8 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 - Hits (<n>): `a`, `b`
 - Surprises (<n>): `c` (<why>)
 - Missed (<n>): `d` (<still to do, or wrong guess?>)
-- Not committed (<n>): `e`
+- Maybe, not changed (<n>): `e` (<why it is not needed yet>)
+- Not committed (<n>): `f`
 - Checks: <tests / lint / audit: pass, fail, or "not run (no --run-checks)">
 
 </details>
@@ -169,7 +170,7 @@ A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
 
 </details>
 
-<sub>Made by blast-radius v0.6.1</sub>
+<sub>Made by blast-radius v0.6.2</sub>
 ```
 
 ### AFTER-only (no BEFORE report)

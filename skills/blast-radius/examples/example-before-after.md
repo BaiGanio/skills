@@ -145,7 +145,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 <!-- blast-radius:after id=idea-add-tags-notes version=1 date=2026-11-27 -->
 ## Blast radius AFTER: Add tags to notes
 
-**Merge score 7/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 57% · 4 file(s) · 1 repo(s) · security L · findings 2 high, 4 medium, 1 low · now 1 high, 1 medium, 3 low · PR: branch feat/tags (no PR)
+**Merge score 7/100** (not ready) · **Size L** (guess was L) · confidence high · accuracy 50% · 4 file(s) · 1 repo(s) · security L · findings 2 high, 4 medium, 1 low · now 1 high, 1 medium, 3 low · PR: branch feat/tags (no PR)
 
 > **Merge score**: 7/100, not ready. Bug risk: high (F1, run). Fix first: F1, F3, F4.
 > **WHAT check**: partly. The API stores tags, returns them, and filters with `GET /notes?tag=`. Bad tags do not get 400, `docs/api.md` is not updated, and notes-web has no tag input or filter yet.
@@ -206,11 +206,11 @@ Overall: L, from Contracts, Risk, and Security. Only 3 of the 6 parts are L, so 
 
 - Hits (4): `src/routes/notes.js`, `src/db.js`, `test/notes.test.js`, `src/migrations/002_tags.sql` (a "maybe" in the guess)
 - Surprises (0)
-- Missed (3): `docs/api.md` (still to do, F3), `notes-web/index.html` and `notes-web/src/app.js` (still to do, F5)
-- Maybe, not changed: `notes-web/src/api.js` (now needed: the filter is on the server, so `listNotes(tag)`), `AGENTS.md:7` (lists the calls notes-web makes; add `?tag=` when notes-web uses it)
+- Missed (4): `docs/api.md` (still to do, F3), `notes-web/index.html` and `notes-web/src/app.js` (still to do, F5), `notes-web/src/api.js` (a "maybe" whose "if" came true: the filter is on the server, so it needs `listNotes(tag)`; still to do, F5)
+- Maybe, not changed (1): `AGENTS.md:7` (lists the calls notes-web makes; add `?tag=` when notes-web uses it)
 - Not committed (0)
 - Checks: not run (no --run-checks)
-- Accuracy 57% (fair). The guess had the right API files. The misses are the docs and the whole notes-web side, which is not started.
+- Accuracy 50% (fair): 4 hits / (4 + 0 + 4). The guess had the right API files. The misses are the docs and the whole notes-web side, which is not started.
 
 </details>
 

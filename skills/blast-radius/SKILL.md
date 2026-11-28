@@ -3,7 +3,7 @@ name: blast-radius
 description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, security, a look ahead at what the change can cause later (other code, code flow, design), and a merge score. Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
 license: MIT
 metadata:
-  version: 0.6.1
+  version: 0.6.2
   repo: https://github.com/BaiGanio/skills
 ---
 
