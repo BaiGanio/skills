@@ -62,6 +62,8 @@ Example: an API response gets a new optional `tags` field. If no client must cha
 | L | Auth, payments, data writes, migrations, config, CI, or code with no tests. |
 | XL | The production deploy path, security, possible data loss, or a change that many users hit at once. |
 
+Old loss paths: when a new crash can reach a data loss that old code can already cause (for example a crash that wipes an in-memory store, and bad JSON already crashes it), Risk is at most **L**. Name the old path in Notes: "Not XL: the loss path is old (<F-ID>)". This is the same rule as for Security size (quality.md).
+
 ## Tests
 
 | Size | Meaning |
