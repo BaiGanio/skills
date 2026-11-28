@@ -167,7 +167,10 @@ More than 10 findings:
 
 - **Kind**: `security`, `bug`, `test`, `standard`, `architecture`, `duplication`, `smell`, `should-change`.
   - **security** or **bug**? A crash or a hole that someone from outside can trigger on purpose (bad input, a crafted request) is **security**. A wrong result that needs no bad intent is **bug**.
-- **Sev**: **high** = a bug, a security hole, possible data loss, or a must rule broken. **medium** = will cost time soon, or a should rule broken. **low** = style, or a pattern not followed.
+- **Sev**:
+  - **high** = a crash in normal use, a security hole, data loss the code causes on its own (a crash that wipes the store, a bad write), or a must rule broken.
+  - **medium** = a wrong result with no crash and no data loss (`?tag=work` also returns "homework"), a UI that makes a user mistake easy (a delete with no confirm), something that will cost time soon, or a should rule broken.
+  - **low** = a bug only in a rare or tool-only case (a crash only under `node -e`), style, or a pattern not followed.
 - **should-change** severity: **medium** by default. **high** only when a must rule names that exact file or contract. Example: `AGENTS.md` says "The API shape is in `docs/api.md`. Both repos must match it." The diff changes the API, not `docs/api.md`: high. Name the rule in What (`AGENTS.md:12`). Only the finding for the named file gets high. Other files the rule touches only through it (a client in another repo) stay medium. **low** when only a comment, or a list in a README, is out of date.
 - One root cause is one finding. Give it the highest severity of its effects, and name the other effects in What (for example the must rule it breaks). Example: `tags` is not checked, so `tags: null` crashes the API and the must rule "all input is checked" breaks: one high finding, not a high and a medium. This joins effects of the **new** code only. An old gap stays its own "Now:" finding, even when the same fix closes both (old `title` and `text` with no checks). Name the shared fix in both rows.
 - The one-root-cause rule is for one gap with many effects. A cheat and the gap it hides are two findings (TEST TRUST).
