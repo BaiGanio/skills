@@ -1,9 +1,9 @@
 ---
 name: blast-radius
-description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, security, a look ahead at what the change can cause later (other code, code flow, design), and a merge score. Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
+description: Measure what a ticket, issue, idea, or PR changes in the code, and how well it fits. BEFORE the work - WHAT, WHY, an impact guess, code to reuse, and rules to follow. AFTER the work - the real diff vs the guess, plus duplication, smells, broken standards, security, test trust (do the tests prove WHAT, with no drift or cheating), a look ahead at what the change can cause later (other code, code flow, design), and a merge score. Use for "/blast-radius", "blast radius", "impact of this ticket", "how big is this change", "what does this touch", or when a branch or PR is ready for review.
 license: MIT
 metadata:
-  version: 0.6.2
+  version: 0.7.0
   repo: https://github.com/BaiGanio/skills
 ---
 
@@ -18,11 +18,12 @@ Understand a change before and after it is made:
 5. **HEALTH**: duplication, code smells, and bugs in the touched area.
 6. **SECURITY**: what changes for auth, input, secrets, and data?
 7. **AHEAD** (AFTER only): what can the change cause later, in other code, the code flow, and the design?
+8. **TEST TRUST** (AFTER only): do the tests prove WHAT, or do they only pass?
 
 Two modes:
 
 - **BEFORE**: the work has not started. Guess the impact. Find code to reuse, smells to know about, and the rules the work must follow.
-- **AFTER**: the work is done. Measure the real diff, compare it with the BEFORE guess, check the diff for FIT, HEALTH, and SECURITY, look ahead for risks that are not bugs yet, and give a merge score (0-100) from a fixed rule.
+- **AFTER**: the work is done. Measure the real diff, compare it with the BEFORE guess, check the diff for FIT, HEALTH, and SECURITY, check that the tests prove WHAT (no drift, no cheating), look ahead for risks that are not bugs yet, and give a merge score (0-100) from a fixed rule.
 
 ## Rules
 
@@ -221,6 +222,7 @@ WHAT: <one line>
 Files: <n> change, <n> new, <n> delete, <n> maybe · repos: <n> · security <S|M|L|XL>
 Findings: <n> high, <n> medium, <n> low · now: <n> high · top: <F1, short>
 [AFTER: score <n> <call> · guess <size>→<size> · accuracy <n>% · FIT <n>/<n> · ahead <n>]
+[Tests: <n>/<n> done-when proved · <the worst test problem, short>]
 Questions: <n, or "none">
 Report: <path or URL, or "not written (dry run)">
 ```

@@ -82,6 +82,37 @@ Scope: the change list plus one level of callers. Not the whole repo.
 
 **Bugs**: real bugs you see while reading. Prove one with a read-only probe when you can (tag **run**).
 
+## TEST TRUST (AFTER only)
+
+Do the tests prove WHAT, or do they only pass? Check the tests and the code that the diff added or changed. Read the test bodies, not only their names.
+
+**Done when vs tests.** Take each "Done when" check from WHAT. Find the test that proves it. Give each check one answer:
+- **yes**: a test runs that check and asserts the result (the value, not only a count or "no error").
+- **partly**: a test is near it but checks less (one layer only, a count only, the happy path only).
+- **no**: no test, or the only test passes for the wrong reason.
+
+When you can, prove the check with a read-only probe (tag **run**). A check that the code does not meet is a finding of its own kind (bug, security, or should-change), not a **test** finding.
+
+**Drift**: tests that no longer match WHAT or the contract.
+- An expected value that the diff changed so the test passes, while the new value goes against WHAT, the contract doc, or the BEFORE report.
+- A test name that says X while its asserts check Y.
+- A test that the diff deleted, skipped (`.skip`, `xit`, `@Ignore`, `@Disabled`, `pytest.mark.skip`, `t.Skip`), or commented out.
+
+**Cheating**: code or tests that pass without doing the work.
+- Code with a special path for test input: a hard-coded value that matches a test fixture, `NODE_ENV === 'test'`, or a check on a test name or a test-only header.
+- Weaker asserts: an exact value changed to `toBeTruthy`, `>=`, or `assert.ok`, or a removed assert. A test with no real assert (it can never fail).
+- A mock or stub of the code under test, so the test checks the mock.
+- A try/catch or `.catch` in a test that hides a failure.
+- Snapshots rewritten in full, with no reason in the diff.
+- Test, coverage, or CI config that the diff changed to skip files or tests.
+
+Each hit is a finding of kind **test**:
+- **high**: cheating, or a deleted or skipped test that fails on the new code. Prove the fail with a probe when you can.
+- **medium**: drift, a weaker assert, or a test with no real assert.
+- **low**: a test name that does not match its asserts, when the asserts still prove something.
+
+A missing test is not a **test** finding. It is a FIT or standard finding ("every route has a test"). Do not list it twice: in the Done-when table, name that finding.
+
 ## SECURITY: checklist
 
 Walk this list for the touched area. Skip the items that do not apply. Each hit is a finding.
@@ -118,7 +149,7 @@ One table. Highest severity first. Inside one severity, new findings first, then
 |---|---|---|---|---|---|
 | F1 | high | security | `src/routes/notes.js:12` | Bad JSON in POST crashes the server (run) | Catch the parse error; return 400 |
 
-- **Kind**: `security`, `bug`, `standard`, `architecture`, `duplication`, `smell`, `should-change`.
+- **Kind**: `security`, `bug`, `test`, `standard`, `architecture`, `duplication`, `smell`, `should-change`.
   - **security** or **bug**? A crash or a hole that someone from outside can trigger on purpose (bad input, a crafted request) is **security**. A wrong result that needs no bad intent is **bug**.
 - **Sev**: **high** = a bug, a security hole, possible data loss, or a must rule broken. **medium** = will cost time soon, or a should rule broken. **low** = style, or a pattern not followed.
 - **should-change** severity: **medium** by default. **high** only when a must rule names that exact file or contract. Example: `AGENTS.md` says "The API shape is in `docs/api.md`. Both repos must match it." The diff changes the API, not `docs/api.md`: high. Name the rule in What (`AGENTS.md:12`). Only the finding for the named file gets high. Other files the rule touches only through it (a client in another repo) stay medium. **low** when only a comment, or a list in a README, is out of date.

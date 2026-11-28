@@ -18,6 +18,7 @@ You give it a ticket, an issue, an idea, or a PR. It tells you:
 - **FIT**: does the change follow your project's rules and architecture?
 - **HEALTH**: code that already does the same job (reuse it), code smells, and bugs in the area.
 - **SECURITY**: what changes for auth, input checks, secrets, and data.
+- **TEST TRUST** (after the work): do the tests prove what the ticket asked, or do they only pass? It looks for tests that drift from the goal, and for code or tests that cheat to pass.
 - **LOOK AHEAD** (after the work): what the change can cause later: in other code, in the code flow, in the design, and when data grows.
 
 It also draws 1 to 3 small diagrams, so you see where the change lands.

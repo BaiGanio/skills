@@ -91,7 +91,7 @@ Not changed (seen): <files a reader may expect to change but do not, or leave th
 
 </details>
 
-<sub>Made by blast-radius v0.6.2</sub>
+<sub>Made by blast-radius v0.7.0</sub>
 ```
 
 If there is no older version, leave out the History block.
@@ -109,6 +109,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 > **Merge score**: <n>/100, <call>. Bug risk: <high|medium|low> (<IDs, tag>). <Fix first: the findings to fix (scoring.md), for example F1, F2>
 > **WHAT check**: <yes / partly / no>. <why, one line>
 > **FIT check**: <n> of <n> rules followed. <the worst break, or "all followed">
+> **Test trust**: <n> of <n> "Done when" checks proved. <the worst test problem (F-ID), or "no drift or cheating seen">
 > **Biggest surprise**: <one line>
 > **Top findings**: F1 <one line> · F2 <one line> · F3 <one line> (new findings first, highest first; a "Now:" high only when fewer than 3 new ones)
 > **Look ahead**: A1 <one line> · A2 <one line> (max 2), or "none seen: <reason>"
@@ -150,6 +151,16 @@ Overall: <real size: which rule gave it (scoring.md "Overall size")>.
 
 </details>
 
+<details><summary>Tests: do they prove WHAT? (<n> of <n> proved)</summary>
+
+| Done when | Test | Proves it? | Note |
+|---|---|---|---|
+| <a check from WHAT> | `test/file:line`, or "none" | yes / partly / no | <why; the F-ID> |
+
+Drift and cheating: <the **test** findings (F-IDs), or "none seen: <what was checked>">
+
+</details>
+
 <details><summary>Findings: health and security (<n>)</summary>
 
 <same table as BEFORE. Kinds include should-change. Add "Fixed by this diff: <old smells now gone>". Add "Still open from BEFORE, outside the touched area: <BEFORE F2 (short), ...>" when there are any. Add the "Probes:" line when a probe patched something.>
@@ -186,13 +197,13 @@ Not changed (seen): <files a reader may expect to change but did not, or leave t
 
 </details>
 
-<sub>Made by blast-radius v0.6.2</sub>
+<sub>Made by blast-radius v0.7.0</sub>
 ```
 
 ### AFTER-only (no BEFORE report)
 
 - In the header: leave out "guess was" and accuracy. Keep the merge score (no WHAT part, see scoring.md).
-- In the top box: put **WHAT** and **WHY** (from the ticket, or tagged guess) instead of "WHAT check" and "Biggest surprise". Keep "FIT check", "Top findings", and "Look ahead".
+- In the top box: put **WHAT** and **WHY** (from the ticket, or tagged guess) instead of "WHAT check" and "Biggest surprise". Keep "FIT check", "Test trust", "Top findings", and "Look ahead".
 - Add an "Open questions" section after the impact map, like in BEFORE.
 - Do not use the dashed "surprise" style. Use `todo` for should-change files and repos.
 - Replace "Guess vs real" with "Impact: size per part" from the BEFORE template, using a "Real" column.

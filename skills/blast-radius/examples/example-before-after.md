@@ -150,6 +150,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 > **Merge score**: 17/100, not ready. Bug risk: high (F1, run). Fix first: F1, F2.
 > **WHAT check**: partly. The API stores tags, returns them, and filters with `GET /notes?tag=`. Bad tags do not get 400, `docs/api.md` is not updated, and notes-web has no tag input or filter yet.
 > **FIT check**: 4 of 7 rules followed. Worst break: `tags` is not checked, and one bad value can crash the API (F1).
+> **Test trust**: 0 of 4 "Done when" checks proved. No drift or cheating seen; the one new test checks a count only, and no route has a test (F6).
 > **Biggest surprise**: the filter went to the server (`?tag=`, open question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F7).
 > **Top findings**: F1 `tags: null` plus `GET /notes?tag=x` crashes the API · F2 `docs/api.md` not updated · F5 notes-web has no tag part yet
 > **Look ahead**: A1 notes-web `listNotes` has no tag yet · A2 each GET scans every note
@@ -229,6 +230,19 @@ Sources: `.blast-radius/standards.md`, `AGENTS.md`, the BEFORE checklist. Not fo
 | The API shape is in `docs/api.md`; both repos match it. | `AGENTS.md:12` | breaks (F2) | `docs/api.md:7-8` |
 
 Not checked: "show note data with `textContent`" (pattern, notes-web): notes-web has no change yet.
+
+</details>
+
+<details><summary>Tests: do they prove WHAT? (0 of 4 proved)</summary>
+
+| Done when | Test | Proves it? | Note |
+|---|---|---|---|
+| `POST /notes` with `tags: ["work"]` returns the tags | `test/notes.test.js:10-13` | partly | Tests `db.add` only, not the route. A probe showed the route returns `tags`. (run) No route test (F6). |
+| `GET /notes` returns them | `test/notes.test.js:10-13` | partly | Checks `db.list('work').length`, a count only, not which note or its tags. (seen) |
+| Bad tags get 400 | none | no | No test, and the code gives 201 and then crashes (F1). (run) |
+| Web app: pick "work", and only that note shows | none | no | notes-web is not done (F5). (seen) |
+
+Drift and cheating: none seen. Checked: the diff changes no old assert, skips or deletes no test, and adds no test-only path in the code. (seen)
 
 </details>
 
