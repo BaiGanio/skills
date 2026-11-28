@@ -3,7 +3,7 @@
 <!-- blast-radius:before id=idea-add-tags-notes version=1 date=2026-11-27 -->
 ## Blast radius: Add tags to notes
 
-**Size L** · confidence medium · 6 file(s) · 2 repo(s) · security M · findings 2 high, 5 medium, 3 low · source: text
+**Size L** · confidence medium · 6 file(s) · 2 repo(s) · security M · findings 3 high, 4 medium, 3 low · source: text
 
 > **WHAT**: Notes get a list of tags when they are made, and the web app can filter its list to one tag. Done when `POST /notes` with `{title, text, tags: ["work"]}` returns the tags, `GET /notes` returns them, bad tags get 400, and in the web app: add 2 notes, tag one "work", pick "work", and only that note shows.
 > **WHY**: The list is one flat list with no way to group notes, so users who keep many notes cannot find them. Tags let them find a note fast. (guess)
@@ -105,7 +105,7 @@ Checklist for the person who does the work. "breaks" means the code in the touch
 |---|---|---|---|---|---|
 | F1 | high | security | `notes-api/src/routes/notes.js:4` | Now: bad JSON in `POST /notes` throws in `readBody`; the rejection is not caught and the process exits with code 1. Anyone with the key (see F2) can stop the API. (run) | Use `readJson` from `src/http.js`; return 400 when it gives `null`. Fix it first, in its own ticket or the first commit. |
 | F2 | high | security | `notes-web/src/config.js:2` | Now: the API key is in client code, so every browser gets it. It is the same as the server's built-in fallback at `notes-api/src/auth.js:2`, used when `API_KEY` is not set; the `Dockerfile` sets none. (seen) | Separate ticket: remove the fallback, set `API_KEY` at deploy, and stop shipping the key to the browser. |
-| F3 | medium | security | `notes-api/src/routes/notes.js:10` | Now: POST stores the body with no checks: `title: 123` gets 201, and `text` can be missing. (run) `tags` would be a new input with no type, count, or length limit. | Add a validator: title is a string, tags is an array of short strings with a max count (named constants); else 400. |
+| F3 | high | security | `notes-api/src/routes/notes.js:10` | Now: POST stores the body with no checks: `title: 123` gets 201, and `text` can be missing. (run) Breaks the must rule at `.blast-radius/standards.md:4`. `tags` would be a new input with no type, count, or length limit. | Add a validator: title is a string, tags is an array of short strings with a max count (named constants); else 400. |
 | F4 | medium | bug | `notes-api/src/routes/notes.js:9` | Now: raw compare on `req.url`, so `GET /notes?tag=work` returns 405. (run) Blocks a server-side filter. | Parse with `new URL(req.url, 'http://localhost')` and match `pathname`. Needed only if the filter is on the server. |
 | F5 | medium | bug | `notes-web/src/app.js:8` | Now: a click anywhere on a note deletes it, with no confirm. A clickable tag inside the `li` would pass the click up and delete the note. (seen) | Move delete to its own button. Keep tag clicks from reaching the `li` handler. |
 | F6 | medium | standard | `notes-api/test/notes.test.js:5` | Now: only `db.add` and `db.list` are tested; no route has a test. The test checks a global count (`length, 1`), so a second test in this file that adds a note breaks it. (seen) | Add route tests (call `createServer()` and send requests); check counts relative to the start. |
