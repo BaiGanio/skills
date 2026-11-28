@@ -112,7 +112,7 @@ Size what the change adds or removes. "Now:" holes in old code do not raise the 
 
 ## Findings
 
-One table. Highest severity first. Max 10 rows. Count the rest under the table.
+One table. Highest severity first. Inside one severity, new findings first, then "Now:" findings. Max 10 rows. Count the rest under the table.
 
 | ID | Sev | Kind | Where | What | Fix |
 |---|---|---|---|---|---|
