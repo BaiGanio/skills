@@ -161,18 +161,17 @@ flowchart LR
   Route[GET/POST /notes]:::m --> Store[db.js list, add]:::m
   Test[db tag test]:::s --> Store
   Mig[002_tags.sql unused]:::s
-  Route -.-> Doc[docs/api.md stale]
-  Web[notes-web stale] -.-> Route
+  Route -.-> Doc[docs/api.md to do]
+  Web[notes-web to do] -.-> Route
   Server[server.js, auth.js]:::same
-  class Doc same,surprise
-  class Web same,surprise
+  class Doc,Web todo
   classDef s fill:#d4edda,stroke:#28a745,color:#000
   classDef m fill:#fff3cd,stroke:#d39e00,color:#000
   classDef same fill:#eeeeee,stroke:#999999,color:#555
-  classDef surprise stroke-dasharray: 5 5
+  classDef todo fill:#ffffff,stroke:#666666,color:#555,stroke-dasharray: 2 2
 ```
 
-<sub>Green S · yellow M · orange L · red XL · grey no change · dashed grey: should have changed (stale)</sub>
+<sub>Green S · yellow M · orange L · red XL · grey no change · dotted white: still to do (missed, or should have changed)</sub>
 
 **Before → after**
 

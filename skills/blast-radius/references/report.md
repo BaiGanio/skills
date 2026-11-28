@@ -114,7 +114,7 @@ In file mode, add this under the BEFORE text. In comment mode, this is the whole
 
 ### Impact map (real)
 
-<diagram from the diff; surprises dashed>
+<diagram from the diff; surprises dashed; still to do dotted (`todo`)>
 
 <details><summary>Guess vs real</summary>
 
@@ -179,7 +179,7 @@ A score from the rule in scoring.md, not a chance. "Now:" findings do not count.
 - In the header: leave out "guess was" and accuracy. Keep the merge score (no WHAT part, see scoring.md).
 - In the top box: put **WHAT** and **WHY** (from the ticket, or tagged guess) instead of "WHAT check" and "Biggest surprise". Keep "FIT check", "Top findings", and "Look ahead".
 - Add an "Open questions" section after the impact map, like in BEFORE.
-- Do not use the dashed "surprise" style, except for "stale" files.
+- Do not use the dashed "surprise" style. Use `todo` for should-change files and repos.
 - Replace "Guess vs real" with "Impact: size per part" from the BEFORE template, using a "Real" column.
 - Add a closed "Files" block like in BEFORE.
 

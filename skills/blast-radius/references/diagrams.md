@@ -20,9 +20,12 @@ classDef l fill:#ffe0b2,stroke:#e8590c,color:#000
 classDef xl fill:#f8d7da,stroke:#c82333,color:#000
 classDef same fill:#eeeeee,stroke:#999999,color:#555
 classDef maybe fill:#eeeeee,stroke:#999999,color:#555,stroke-dasharray: 5 5
+classDef todo fill:#ffffff,stroke:#666666,color:#555,stroke-dasharray: 2 2
 ```
 
-Use `maybe` for "maybe" files, for stale files (label ends with "stale"), and for a repo the change depends on (with a dashed arrow labelled "needs").
+Use `maybe` for "maybe" files, for stale files in BEFORE (label ends with "stale"), and for a repo the change depends on (with a dashed arrow labelled "needs").
+
+Use `todo` (white, dotted border) only in AFTER: a file or a whole repo that must change but the diff did not change it (Missed, or a should-change finding). The label ends with "to do". In ASCII, write `[to do]`, for example `notes-web [to do]`.
 
 ## 1. Impact map (always)
 
@@ -96,7 +99,7 @@ website [M] --GET /api/items--> api [L] --JWT audience--> auth [M]
 
 ## AFTER mode
 
-Draw the impact map from the real diff. Mark surprises with a dashed border:
+Draw the impact map from the real diff. Show work still to do with the `todo` class (see above). Mark surprises with a dashed border:
 
 ```
 classDef surprise stroke-dasharray: 5 5
