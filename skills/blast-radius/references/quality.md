@@ -119,6 +119,7 @@ One table. Highest severity first. Max 10 rows. Count the rest under the table.
 - **Kind**: `security`, `bug`, `standard`, `architecture`, `duplication`, `smell`, `should-change`.
 - **Sev**: **high** = a bug, a security hole, possible data loss, or a must rule broken. **medium** = will cost time soon, or a should rule broken. **low** = style, or a pattern not followed.
 - **should-change** severity: **medium** by default. **high** only when a must rule names that exact file or contract. Example: `AGENTS.md` says "The API shape is in `docs/api.md`. Both repos must match it." The diff changes the API, not `docs/api.md`: high. Name the rule in What (`AGENTS.md:12`). Only the finding for the named file gets high. Other files the rule touches only through it (a client in another repo) stay medium. **low** when only a comment, or a list in a README, is out of date.
+- One root cause is one finding. Give it the highest severity of its effects, and name the other effects in What (for example the must rule it breaks). Example: `tags` is not checked, so `tags: null` crashes the API and the must rule "all input is checked" breaks: one high finding, not a high and a medium.
 - A finding about code that exists today starts with "Now:". Suggest fixing a high one in a separate ticket first.
 - A live secret anywhere a stranger can read it (a public repo, its git history, a client bundle) is **high**, even as "Now:". To search git history, redact the value: `git log -p -S '<name>' | sed -E 's/(key|token|secret|password)([^:=]*[:=]).*/\1\2 <redacted>/I'`.
 
