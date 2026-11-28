@@ -3,11 +3,11 @@
 <!-- blast-radius:before id=idea-add-tags-notes version=1 date=2026-11-27 -->
 ## Blast radius: Add tags to notes
 
-**Size L** · confidence medium · 6 file(s) · 2 repo(s) · security M · findings 3 high, 4 medium, 3 low · source: text
+**Size L** · confidence medium · 6 file(s) · 2 repo(s) · security M · now 3 high, 4 medium, 5 low · new 0 high, 0 medium, 0 low · source: text
 
 > **WHAT**: Notes get a list of tags when they are made, and the web app can filter its list to one tag. Done when `POST /notes` with `{title, text, tags: ["work"]}` returns the tags, `GET /notes` returns them, bad tags get 400, and in the web app: add 2 notes, tag one "work", pick "work", and only that note shows.
 > **WHY**: The list is one flat list with no way to group notes, so users who keep many notes cannot find them. Tags let them find a note fast. (guess)
-> **Other way**: Filter in the browser, over the list `GET /notes` already returns. The API then only stores and returns tags: no query parameter, no tags table, no new route. This report sizes that way.
+> **Other way**: Write tags as `#work` in the note text. notes-web finds them and filters the list, and the API and `docs/api.md` do not change. Simpler, but other clients cannot read tags as a field.
 > **Top findings**: F1 bad JSON in `POST /notes` crashes the API process · F2 the API key is in client code · F3 `POST /notes` stores input with no checks; tags would be a new unchecked input
 
 ### Impact map
@@ -31,7 +31,7 @@ flowchart LR
 ### Open questions
 
 1. Filter on the server (`GET /notes?tag=work`) or in the browser? This report sizes the browser. The server way adds `notes-web/src/api.js`, a query parameter in `docs/api.md`, and the F4 fix.
-2. Can users add tags to a note that already exists? There is no update route today (`notes-api/src/routes/notes.js:9-12`). If yes, a new `PATCH /notes/:id` route is needed, and Design goes to L.
+2. Can users add tags to a note that already exists? There is no update route today (`notes-api/src/routes/notes.js:9-12`). If yes, a new `PATCH /notes/:id` route is needed. It counts under Contracts (a new route in `docs/api.md`), and Design stays M (a new `db.update` in the `db` pattern).
 3. What is a tag: free text or a fixed list? What limits (tags per note, length) and is the match case-sensitive?
 4. Is the SQLite store real? `notes-api/src/db.js:1` says the deploy uses SQLite, but no code runs `src/migrations/001_init.sql` (F8). If it is real, tags need a `002` migration.
 5. Who asked for tags, and what problem do they have? The ticket gives no reason, so WHY is a guess.
@@ -41,7 +41,7 @@ flowchart LR
 | Part | Size | Notes |
 |---|---|---|
 | Files | L | 6 change, 0 new, 0 delete, 3 maybe. 6 files is M, but 2 repos with real work make it at least L. (seen) |
-| Design | M | A new `tags` field on the note, a new validation function in the route, and a tag filter and tag input in `app.js`. Not L: no module's public interface breaks, and `db.add` keeps its callers. (seen) L if tags can be added to existing notes (new PATCH route). (guess) |
+| Design | M | A new `tags` field on the note, a new validation function in the route, and a tag filter and tag input in `app.js`. Not L: no module's public interface breaks, and `db.add` keeps its callers. (seen) Still M with a PATCH route for old notes: the route counts under Contracts, and `db.update` is a new function in the `db` pattern. (guess) |
 | Architecture | S | No new module, layer, store, or dependency. Tags ride on the note through the existing GET and POST flow. (seen) L if tags get their own table. (guess) |
 | Contracts | L | `docs/api.md` changes: the POST body and both responses get `tags`. Old clients still work, because the API drops unknown fields today. (run) Not XL: nothing breaks for old clients. |
 | Risk | L | Data writes through a route with no tests (F6), on a POST path that can crash the process today (F1). (run) Not XL: no deploy path change, and the store is in memory. |
@@ -80,26 +80,26 @@ The contract is `notes-api/docs/api.md`. `notes-api/AGENTS.md:12` says both repo
 
 </details>
 
-<details><summary>Fit: project rules (2 follow, 5 break, 1 unclear)</summary>
+<details><summary>Fit: project rules (plan: 3 follow, 0 break, 5 unclear)</summary>
 
 Sources: `notes-api/.blast-radius/standards.md`, `notes-api/AGENTS.md`. Not found: CLAUDE.md, CONTRIBUTING.md, ADRs, lint or format config, `.editorconfig`; notes-web has no rule files.
 
-Checklist for the person who does the work. "breaks" means the code in the touched area breaks the rule today; the work should fix it in the lines it touches.
+Checklist for the person who does the work. **Now** is the code in the touched area today; the work should fix a break in the lines it touches. **Plan** is the ticket's plan, sized the browser way (open question 1).
 
-| Rule | Source | Status | Where |
-|---|---|---|---|
-| All HTTP input is checked. Bad input returns 400, never crashes. Check `tags` too. | `.blast-radius/standards.md` (must) | breaks now (F1, F3) | `notes-api/src/routes/notes.js:4`, `:10` |
-| No secrets in client code. Add none in the tag work. | `.blast-radius/standards.md` (must) | breaks now (F2) | `notes-web/src/config.js:2` |
-| Every route has a test. | `.blast-radius/standards.md` (should) | breaks now (F6) | `notes-api/test/notes.test.js:5` |
-| Routes parse the URL with `new URL()`. | `.blast-radius/standards.md` (should) | breaks now (F4) | `notes-api/src/routes/notes.js:9-11` |
-| Use `src/http.js` helpers for JSON bodies and responses. | `.blast-radius/standards.md` (should) | breaks now (F7) | `notes-api/src/routes/notes.js:3-8` |
-| Layers: routes -> db. Tag storage and any filter go in `db.js`, not the route. | `.blast-radius/standards.md` (architecture) | follows | `notes-api/src/routes/notes.js:1` |
-| The API shape is in `docs/api.md`; both repos match it. Update it in the same change. | `notes-api/AGENTS.md:12` | unclear: decided by whether the work updates `docs/api.md:7-8` | `notes-api/docs/api.md:7-8` |
-| Show note data with `textContent`, never `innerHTML`. Do the same for tag text. | pattern | follows | `notes-web/src/app.js:7` |
+| Rule | Source | Now | Plan | Where |
+|---|---|---|---|---|
+| All HTTP input is checked. Bad input returns 400, never crashes. Check `tags` too. | `.blast-radius/standards.md` (must) | breaks (F1, F3) | unclear: decided by whether POST checks `tags` | `notes-api/src/routes/notes.js:4`, `:10` |
+| No secrets in client code. Add none in the tag work. | `.blast-radius/standards.md` (must) | breaks (F2) | follows: the tag work adds no secret | `notes-web/src/config.js:2` |
+| Every route has a test. | `.blast-radius/standards.md` (should) | breaks (F6) | unclear: decided by whether the work adds route tests | `notes-api/test/notes.test.js:5` |
+| Routes parse the URL with `new URL()`. | `.blast-radius/standards.md` (should) | breaks (F4) | follows: the browser filter adds no route and no query | `notes-api/src/routes/notes.js:9-11` |
+| Use `src/http.js` helpers for JSON bodies and responses. | `.blast-radius/standards.md` (should) | breaks (F7) | unclear: decided by whether the POST change uses `readJson` | `notes-api/src/routes/notes.js:3-8` |
+| Layers: routes -> db. Tag storage and any filter go in `db.js`, not the route. | `.blast-radius/standards.md` (architecture) | follows | follows: tags are stored in `db.add` | `notes-api/src/routes/notes.js:1` |
+| The API shape is in `docs/api.md`; both repos match it. Update it in the same change. | `notes-api/AGENTS.md:12` | follows | unclear: decided by whether the work updates `docs/api.md:7-8` | `notes-api/docs/api.md:7-8` |
+| Show note data with `textContent`, never `innerHTML`. Do the same for tag text. | pattern | follows | unclear: the ticket does not say how tags show | `notes-web/src/app.js:7` |
 
 </details>
 
-<details><summary>Findings: health and security (10)</summary>
+<details><summary>Findings: health and security (12)</summary>
 
 | ID | Sev | Kind | Where | What | Fix |
 |---|---|---|---|---|---|
@@ -114,7 +114,7 @@ Checklist for the person who does the work. "breaks" means the code in the touch
 | F9 | low | bug | `notes-api/src/server.js:13` | Now: importing `server.js` throws when `process.argv[1]` is undefined (for example under `node -e`). (run) Route tests that import it under `node --test` are fine. | Use `process.argv[1]?.endsWith(...)` or an `import.meta` check. |
 | F10 | low | smell | `notes-web/src/api.js:3-5` | Now: no `r.ok` check, so a 400 from the new tag checks comes back as if it were a note, and the user sees nothing. (seen) | Check `r.ok` and show the error message. |
 
-2 more, low: `DELETE /notes/:id` returns 204 for an id that does not exist (`notes-api/src/routes/notes.js:12`); typo "Not foud" (`notes-api/src/server.js:9`).
+2 more, both "Now:" (low): `DELETE /notes/:id` returns 204 for an id that does not exist (`notes-api/src/routes/notes.js:12`); typo "Not foud" (`notes-api/src/server.js:9`).
 
 Reuse: `readJson` and `sendJson` at `notes-api/src/http.js:2-8`; the `db` object pattern at `notes-api/src/db.js:4-8` for storing and filtering tags; `FormData` reading at `notes-web/src/app.js:14` for the tag input; `textContent` rendering at `notes-web/src/app.js:7` for tag text.
 
@@ -140,7 +140,7 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 
 </details>
 
-<sub>Made by blast-radius v0.3.0</sub>
+<sub>Made by blast-radius v0.7.0</sub>
 
 <!-- blast-radius:after id=idea-add-tags-notes version=1 date=2026-11-27 -->
 ## Blast radius AFTER: Add tags to notes
@@ -150,8 +150,8 @@ Measured in notes-api (the current repo, with 4 of the 6 files). notes-web was r
 > **Merge score**: 17/100, not ready. Bug risk: high (F1, run). Fix first: F1, F2.
 > **WHAT check**: partly. The API stores tags, returns them, and filters with `GET /notes?tag=`. Bad tags do not get 400, `docs/api.md` is not updated, and notes-web has no tag input or filter yet.
 > **FIT check**: 4 of 7 rules followed. Worst break: `tags` is not checked, and one bad value can crash the API (F1).
-> **Test trust**: 0 of 4 "Done when" checks proved. No drift or cheating seen; the one new test checks a count only, and no route has a test (F6).
-> **Biggest surprise**: the filter went to the server (`?tag=`, open question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F7).
+> **Test trust**: 0 of 4 "Done when" checks proved. No drift or cheating seen. Biggest gap: "bad tags get 400" has no test, and the code gives 201 (F1; no route test, F6).
+> **Biggest surprise**: the filter went to the server (`?tag=`, BEFORE question 1), not the browser way the BEFORE report sized. A SQLite migration was added, but no code runs it (F7).
 > **Top findings**: F1 `tags: null` plus `GET /notes?tag=x` crashes the API · F2 `docs/api.md` not updated · F5 notes-web has no tag part yet
 > **Look ahead**: A1 notes-web `listNotes` has no tag yet · A2 each GET scans every note
 
@@ -197,8 +197,8 @@ flowchart LR
 | Design | M | M | same | `db.list(tag)` gets a parameter, `db.add` takes `tags`, the GET route reads the query. No public module interface breaks. (seen) |
 | Architecture | S | S | same | No new module or dependency. `002_tags.sql` adds a `note_tags` table that no code uses, so it is a finding (F7), not L. (seen) |
 | Contracts | L | M | -1, still to do | Still to do: `docs/api.md` (F2) and the notes-web client (F5). The diff adds an optional `?tag=` and `tags` in POST and both responses; old clients still work, and no client uses them yet. (run) |
-| Risk | L | L | same | Data writes through a route with no route tests, and a new crash path (F1). (run) Not XL: no deploy path change. A crash wipes the in-memory notes, but the loss path is old (F3: bad JSON already crashes the API). |
-| Security | L (if no checks) | L | same | Guess for "tags go in with no checks" was L, and the diff took that case. A new input path (`tags`) with no checks (F1). (run) Not XL: the crash needs the API key; any visitor has it only through the old key-in-client hole (BEFORE F2), and old holes do not raise the size. |
+| Risk | L | L | same | Data writes through a route with no route tests, and a new crash path (F1). (run) A crash wipes the in-memory notes. Not XL: the loss path is old (F3): bad JSON already crashes the API. No deploy path change. |
+| Security | L (if no checks) | L | same | Guess for "tags go in with no checks" was L, and the diff took that case. A new input path (`tags`) with no checks (F1). (run) Not XL: needs BEFORE F2 (the API key in client code). Any visitor has the key only through that old hole, and old holes do not raise the size. |
 | Tests | L | S | -2, still to do | Still to do: the first route tests: `?tag=`, POST with tags, bad tags (F6). The diff adds 1 `db` test. (seen) |
 | Rollback | S | S | same | `git revert` and deploy. Not M: no code runs `002_tags.sql`, so no database holds the table. (seen) M if someone runs migrations by hand. (guess) |
 
@@ -261,7 +261,7 @@ Drift and cheating: none seen. Checked: the diff changes no old assert, skips or
 | F9 | medium | standard | `src/routes/notes.js:11-12` | Now: POST and DELETE still compare raw `req.url`, which breaks the should rule "Routes parse the URL with `new URL()`". Same as BEFORE F4; the diff fixed it for GET only. (seen) | Use `u.pathname` for all three (the same fix closes F10). |
 | F10 | low | smell | `src/routes/notes.js:10-12` | The same path match is done two ways: GET uses `u.pathname`, POST and DELETE compare raw `req.url`. The diff made this split. `POST /notes?x=1` gets 405. (run) | Use `u.pathname` for all three (the same fix closes F9). |
 
-3 more, low (Now): `DELETE /notes/:id` returns 204 for an id that does not exist (`src/routes/notes.js:13`); typo "Not foud" (`src/server.js:9`); importing `src/server.js` throws when `process.argv[1]` is undefined (`src/server.js:13`).
+3 more, all "Now:" (low): `DELETE /notes/:id` returns 204 for an id that does not exist (`src/routes/notes.js:13`); typo "Not foud" (`src/server.js:9`); importing `src/server.js` throws when `process.argv[1]` is undefined (`src/server.js:13`).
 
 Still open from BEFORE, outside the touched area: BEFORE F2 (API key in client code, `notes-web/src/config.js:2`, fallback `src/auth.js:2`), BEFORE F5 (click on a note deletes it), BEFORE F10 (no `r.ok` check in `notes-web/src/api.js`).
 
@@ -302,4 +302,4 @@ Not changed (seen): `src/server.js` (`startsWith('/notes')` passes `?tag=` throu
 
 </details>
 
-<sub>Made by blast-radius v0.3.1</sub>
+<sub>Made by blast-radius v0.7.0</sub>
